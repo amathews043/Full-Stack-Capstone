@@ -10,10 +10,10 @@ export const NavBar = () => {
            {/* <img className="image is-2by logo" src={logo} alt="logo"/> */}
             </Link>
             <div className="navbar-start">
-            <Link className="navbar-item" id="white" to="/currentProjects">
+            <Link className="navbar-item" id="white" to="/projectList">
                 Projects
              </Link>
-             <Link className="navbar-item" id="white" to="/completeProjects">
+             <Link className="navbar-item" id="white" to="/myProfile">
                 Profile
              </Link>
              </div>
