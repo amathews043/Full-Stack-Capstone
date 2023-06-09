@@ -21,13 +21,20 @@ export const PostList = () => {
         <article>
             {
                 filteredPosts.map((post) => {
-                    if(post.image){
+                    if(post.image ){
                         return <div class="w-50 p-3 mx-auto p-2 shadow p-3 mb-5 bg-body-tertiary rounded ">
                             <div class="card text-center " key={post.id}>
                                 <img src={post.image} class="card-img-top" alt="..."/>
                                 <div class="card-body">
                                     <h5 class="card-title">{post.project_name} by {post.creator_name}</h5>
                                     <p class="card-text">{post.post}</p>
+                                    <div class="card-footer tags"><small class="text-body-secondary"> <p>Tags: </p>
+                                    {
+                                        post.tags.map((tag) => {
+                                            return <aside className="inline"> <li> {tag.tag} </li></aside>
+                                        })
+                                    }
+                                    </small></div>
                                 </div>
                             </div>
                         </div>
