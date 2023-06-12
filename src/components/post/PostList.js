@@ -9,7 +9,6 @@ export const PostList = () => {
     const [posts, setPosts] = useState([])
     const navigate = useNavigate()
     const user = localStorage.getItem('user_id')
-    const [form, setForm] = useState(false)
 
     useEffect(() => {
         getPosts().then(data => setPosts(data))
@@ -21,14 +20,15 @@ export const PostList = () => {
 
     return (
         <article>
-            <div className="text-center post-list-header">
-            <button className="text-center toggle post-list-header" onClick={() => {setForm(!form)}}> Create a New Post</button>
+            <NewPostForm/>
+            {/* <div className="text-center post-list-header">
+            <button className="text-center toggle post-list-header" onClick={() => {setForm(!formShown)}}> Create a New Post</button>
 
             {
-                form ? <NewPostForm/> : ""
+                formShown ? <NewPostForm formShown={formShown}/> : ""
             }
             <h3> See What Other Crafters are Working on</h3>
-            </div>
+            </div> */}
             {
                 filteredPosts.map((post) => {
                     if(post.image ){
