@@ -21,14 +21,6 @@ export const PostList = () => {
     return (
         <article>
             <NewPostForm/>
-            {/* <div className="text-center post-list-header">
-            <button className="text-center toggle post-list-header" onClick={() => {setForm(!formShown)}}> Create a New Post</button>
-
-            {
-                formShown ? <NewPostForm formShown={formShown}/> : ""
-            }
-            <h3> See What Other Crafters are Working on</h3>
-            </div> */}
             {
                 filteredPosts.map((post) => {
                     if(post.image ){

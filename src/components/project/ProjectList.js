@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { getMyProjects } from "../../managers/ProjectManager.js"
 import { useNavigate, Link } from "react-router-dom"
+import "./projectList.css"
 
 export const ProjectList = () => {
     const [projects, setProjects] = useState([])
@@ -11,8 +12,10 @@ export const ProjectList = () => {
     },
     [])
 
+    // TODO: make the title clickable to go to the project page
+
     return (
-        <article> 
+        <article className="text-center project-list-header"> 
             <button>Start a New Project</button>
             {
                 projects.map((project) => {
