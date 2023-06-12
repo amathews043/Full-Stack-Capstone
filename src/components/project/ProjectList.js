@@ -16,7 +16,7 @@ export const ProjectList = () => {
 
     return (
         <article className="text-center project-list-header"> 
-            <button>Start a New Project</button>
+            <button onClick={() => navigate("/ProjectForm")}>Start a New Project</button>
             {
                 projects.map((project) => {
                         if (project.preview_image){
