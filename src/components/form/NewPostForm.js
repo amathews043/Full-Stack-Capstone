@@ -1,6 +1,4 @@
-import { useState, useEffect, useRef } from "react"
-import { CloudinaryContext, Image } from 'cloudinary-react';
-import { useNavigate } from "react-router-dom"
+import { useState, useEffect } from "react"
 import { getTags } from "../../managers/PostManager"
 import { getMyProjects } from "../../managers/ProjectManager"
 import { newPost } from "../../managers/PostManager"
@@ -8,7 +6,6 @@ import "../post/post.css"
 import { UploadWidget } from "./UploadWidget";
 
 export const NewPostForm = () => {
-    const navigate = useNavigate()
     const [tags, setTags] = useState([])
     const [myProjects, setMyProjects] = useState([])
 
@@ -16,6 +13,7 @@ export const NewPostForm = () => {
     const [postTags, setPostTags] = useState([])
     const [postProject, setPostProject] = useState("")
     const [postImage, setPostImage] = useState("")
+    const [errorMessage, setErrorMessage] = useState("")
 
     const [formShown, setForm] = useState(false)
 
@@ -31,14 +29,17 @@ export const NewPostForm = () => {
             tags: postTags, 
             project: postProject, 
             image: postImage
-
         }
-        newPost(post)
-        setForm(!formShown)
-        setPostText("")
-        setPostTags([])
-        setPostProject("")
-        setPostImage("")
+        if(!post.post || post.tags === [] || !post.project){
+            setErrorMessage("Please Complete All Required Fields")
+        } else{
+            newPost(post)
+            setForm(!formShown)
+            setPostText("")
+            setPostTags([])
+            setPostProject("")
+            setPostImage("")
+        }
     };
 
     useEffect(() => {
@@ -56,6 +57,7 @@ export const NewPostForm = () => {
         {   
             formShown ? 
             <form onSubmit={submit}>
+            <p className="alert">{errorMessage}</p>
             <fieldset>
                 <div> 
                     <input required autoFocus
