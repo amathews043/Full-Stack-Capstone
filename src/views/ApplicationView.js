@@ -4,6 +4,7 @@ import { Register } from "../components/auth/Register"
 import { Authorized } from "./Authorized"
 import { PostList } from "../components/post/PostList"
 import { ProjectList } from "../components/project/ProjectList"
+import { ProjectForm } from "../components/form/ProjectForm"
 
 
 
@@ -15,6 +16,7 @@ export const ApplicationView = () => {
             <Route element={<Authorized />}>
                 <Route path="/" element={<PostList/>}/>
                 <Route path="projectList" element={<ProjectList/>}/>
+                <Route path="projectForm" element={<ProjectForm/>}/>
                 
             </Route>
         </Routes>
