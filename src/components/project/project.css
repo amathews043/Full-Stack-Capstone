@@ -1,0 +1,12 @@
+.project-list-header .newNoteHeader{
+    margin: 25px 0 25px;
+}
+
+.center{
+    text-align: center;
+    margin: 25px 0 25px;
+}
+
+.alert{
+    color: red; 
+}

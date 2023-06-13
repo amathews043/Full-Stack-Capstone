@@ -18,6 +18,15 @@ export const newPost = (post) => {
     })
 }
 
+export const getProjectPosts = (project_id) => {
+    return fetch(`http://localhost:8000/posts?project_id=${project_id}`, {
+        headers:{
+            "Authorization": `Token ${localStorage.getItem("token")}`
+        }, 
+    })
+    .then(response => response.json())
+}
+
 export const getTags = () => {
     return fetch("http://localhost:8000/tags", {
         headers:{

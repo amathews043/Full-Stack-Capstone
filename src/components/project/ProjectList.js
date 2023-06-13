@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { getMyProjects } from "../../managers/ProjectManager.js"
 import { useNavigate, Link } from "react-router-dom"
-import "./projectList.css"
+import "./project.css"
 
 export const ProjectList = () => {
     const [projects, setProjects] = useState([])
@@ -11,8 +11,6 @@ export const ProjectList = () => {
         getMyProjects().then(data => setProjects(data))
     },
     [])
-
-    // TODO: make the title clickable to go to the project page
 
     return (
         <article className="text-center project-list-header"> 
@@ -24,7 +22,7 @@ export const ProjectList = () => {
                             <img src={project.preview_image} className="card-img-top" alt={project.name}/>
                             <div className="card text-center " key={project.id}> 
                                 <div className="card-body">
-                                    <h5 className="card-title">{project.name}</h5>
+                                <h5 className="card-title"><Link to={`/projectDetails/${project.id}`}>{project.name}</Link></h5>
                                     <p className="card-text">{project.description}</p>
                                 </div>
                             </div>
@@ -33,7 +31,7 @@ export const ProjectList = () => {
                             return <div className="w-50 p-3 mx-auto p-2 shadow p-3 mb-5 bg-body-tertiary rounded " key={project.id}>
                             <div className="card text-center " key={project.id}> 
                                 <div className="card-body">
-                                    <h5 className="card-title">{project.name}</h5>
+                                <h5 className="card-title"><Link to={`/projectDetails/${project.id}`}>{project.name}</Link></h5>
                                     <p className="card-text">{project.description}</p>
                                 </div>
                             </div>

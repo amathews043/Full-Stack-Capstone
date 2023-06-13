@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react"
-import { CloudinaryContext, Image } from 'cloudinary-react';
+import { CloudinaryContext} from 'cloudinary-react';
 
 export const UploadWidget = ({setImageURL}) => {
     const widgetRef = useRef();
