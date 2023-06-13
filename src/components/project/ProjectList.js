@@ -20,7 +20,7 @@ export const ProjectList = () => {
             {
                 projects.map((project) => {
                         if (project.preview_image){
-                            return <div className="w-50 p-3 mx-auto p-2 shadow p-3 mb-5 bg-body-tertiary rounded ">
+                            return <div className="w-50 p-3 mx-auto p-2 shadow p-3 mb-5 bg-body-tertiary rounded " key={project.id}>
                             <img src={project.preview_image} className="card-img-top" alt={project.name}/>
                             <div className="card text-center " key={project.id}> 
                                 <div className="card-body">
@@ -30,7 +30,7 @@ export const ProjectList = () => {
                             </div>
                             </div> 
                         }else {
-                            return <div className="w-50 p-3 mx-auto p-2 shadow p-3 mb-5 bg-body-tertiary rounded ">
+                            return <div className="w-50 p-3 mx-auto p-2 shadow p-3 mb-5 bg-body-tertiary rounded " key={project.id}>
                             <div className="card text-center " key={project.id}> 
                                 <div className="card-body">
                                     <h5 className="card-title">{project.name}</h5>
