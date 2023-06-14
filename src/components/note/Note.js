@@ -38,3 +38,4 @@ export const Note = ({projectId, updateProjectNotes}) => {
         }
     </div>
 }
+

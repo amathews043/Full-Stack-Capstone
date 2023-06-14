@@ -55,3 +55,33 @@ export const newProjectNote = (note) => {
         body: JSON.stringify(note)
     })
 }
+
+export const deleteProjectNote = (noteId) => {
+    return fetch(`http://localhost:8000/notes/${noteId}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Token ${localStorage.getItem("token")}`
+        }
+    })
+}
+
+export const editNote = (note) => {
+    return fetch(`http://localhost:8000/notes/${note.id}`, {
+        method: "PUT",
+        headers:{
+            "Content-Type": "application/json",
+            "Authorization": `Token ${localStorage.getItem("token")}`
+        }, 
+        body: JSON.stringify(note)
+    })
+}
+
+export const getSingleNote = (noteId) => {
+    return fetch(`http://localhost:8000/notes/${noteId}`, {
+        headers:{
+            "Authorization": `Token ${localStorage.getItem("token")}`
+        }, 
+    })
+    .then(response => response.json())
+}

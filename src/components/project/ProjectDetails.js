@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom"
+import { useParams, Link, useNavigate } from "react-router-dom"
+import Popup from 'reactjs-popup';
 
-import { getCurrentProject, getProjectNotes } from "../../managers/ProjectManager";
+import { getCurrentProject, getProjectNotes, deleteProjectNote } from "../../managers/ProjectManager";
 import { getProjectPosts } from "../../managers/PostManager";
 import { Note } from "../note/Note";
+import "./project.css"
 
 export const ProjectDetails = () => {
+    const navigate = useNavigate()
     const {project_id} = useParams()
     const [project, setProject] = useState({})
     const [notes, setNotes] = useState([])
@@ -95,7 +98,16 @@ export const ProjectDetails = () => {
                                 <div className="card text-center " key={note.id}>
                                     <div className="card-body">
                                         <p className="card-text">{note.note}</p>
-                                        <div><button> Edit Note </button> <button> Delete Note </button> </div>
+                                        <div><button onClick={() => {
+                                        navigate(`/editNote/${note.id}`)
+                                        }}
+                                        > Edit Note </button> 
+                                        <Popup trigger={<button> Delete Note</button>} position={"right center"}> 
+                                        <div> Are you sure you want to delete me?  <div>
+                                            <button onClick={() => deleteProjectNote(note.id)
+                                            .then(() => getProjectNotes(project.id).then(data => setNotes(data)))}>Delete</button></div> </div>
+                                        </Popup> 
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -107,3 +119,5 @@ export const ProjectDetails = () => {
         </div>
     </article>
 }
+
+
