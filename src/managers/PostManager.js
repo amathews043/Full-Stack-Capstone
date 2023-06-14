@@ -35,3 +35,13 @@ export const getTags = () => {
     })
         .then(response => response.json())
 }
+
+export const deletePost = (postId) => {
+    return fetch(`http://localhost:8000/posts/${postId}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Token ${localStorage.getItem("token")}`
+        }
+    })
+}

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom"
 import { getProjects } from "../../managers/ProjectManager";
 
 
-export const ProjectForm = () => {
+export const NewProjectForm = () => {
     const [projects, setProjects] = useState([])
     const navigate = useNavigate()
     const [errorMessage, setErrorMessage] = useState("")

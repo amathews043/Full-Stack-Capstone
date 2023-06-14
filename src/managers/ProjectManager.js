@@ -36,6 +36,27 @@ export const newProject = (project) => {
     })
 }
 
+export const editProject = (project) => {
+    return fetch(`http://localhost:8000/projects/${project.id}`, {
+        method: "PUT",
+        headers:{
+            "Content-Type": "application/json",
+            "Authorization": `Token ${localStorage.getItem("token")}`
+        }, 
+        body: JSON.stringify(project)
+    })
+}
+
+export const deleteProject = (projectId) => {
+    return fetch(`http://localhost:8000/projects/${projectId}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Token ${localStorage.getItem("token")}`
+        }
+    })
+}
+
 export const getProjectNotes = (project_id) => {
     return fetch(`http://localhost:8000/notes?project_id=${project_id}`, {
         headers:{

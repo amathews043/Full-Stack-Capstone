@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom"
 import Popup from 'reactjs-popup';
 
-import { getCurrentProject, getProjectNotes, deleteProjectNote } from "../../managers/ProjectManager";
-import { getProjectPosts } from "../../managers/PostManager";
+import { getCurrentProject, getProjectNotes, deleteProjectNote, deleteProject } from "../../managers/ProjectManager";
+import { getProjectPosts, deletePost } from "../../managers/PostManager";
 import { Note } from "../note/Note";
 import "./project.css"
 
@@ -44,6 +44,20 @@ export const ProjectDetails = () => {
         <h2 >{project.name}</h2>
         <p>{project.description}</p>
         {project.pattern_url ? <button className="button is-link" type="button"><Link to={project.pattern_url} className="link" target="_blank" rel="noreferrer noopener" > Link to Pattern </Link></button> : ""}
+        
+        {
+            project.user_id === user ? <button onClick={() => navigate(`/editProject/${project.id}`)}>Edit Project</button>
+            : ""
+        }
+
+        <h4>This Project Was Inspired By:</h4>
+
+        {
+            project.inspirations?.map((inspiration) => {
+                return <Link to={`/projectDetails/${inspiration.id}`} key={inspiration.id} ><li> {inspiration.name} </li> </Link>
+            })
+        }
+
         {
                 posts.map((post) => {
                     if(post.image ){
@@ -54,7 +68,14 @@ export const ProjectDetails = () => {
                                     <h5 className="card-title">{post.project_name} by {post.creator_name}</h5>
                                     <p className="card-text">{post.post}</p>
                                     {
-                                        post.user === user ? <div><button> Edit Post </button> <button> Delete Post </button> </div> : ""
+                                        post.user === user ? <div><button> Edit Post </button> 
+                                        <Popup trigger={<button> Delete Post</button>} position={"right center"}> 
+                                        <div> Are you sure you want to delete me?  <div>
+                                            <button onClick={() => deletePost(post.id)
+                                            .then(() => getProjectPosts(project.id).then(data => setPosts(data)))}>Delete</button></div> </div>
+                                        </Popup> 
+                                        </div>
+                                        : ""
                                     }
                                     <div className="card-footer tags"><small className="text-body-secondary"> <p>Tags: </p>
                                     {
@@ -73,7 +94,14 @@ export const ProjectDetails = () => {
                                 <h5 className="card-title">{post.project_name} by {post.creator_name}</h5>
                                 <p className="card-text">{post.post}</p>
                                 {
-                                    post.user === user ? <div><button> Edit Post </button> <button> Delete Post </button> </div>: ""
+                                    post.user === user ? <div><button> Edit Post </button> 
+                                    <Popup trigger={<button> Delete Post</button>} position={"right center"}> 
+                                    <div> Are you sure you want to delete me?  <div>
+                                        <button onClick={() => deletePost(post.id)
+                                        .then(() => getProjectPosts(project.id).then(data => setPosts(data)))}>Delete</button></div> </div>
+                                    </Popup> 
+                                    </div>
+                                    : ""
                                 }
                                 <div className="card-footer tags"><small className="text-body-secondary"> <p>Tags: </p>
                                     {
@@ -88,12 +116,13 @@ export const ProjectDetails = () => {
                     }
                 })
             }
+
             {
                 project.user_id === user ? <div>
                 <h3>Private Notes</h3>
                 <Note projectId={project.id} updateProjectNotes={updateProjectNotes}/>
                     {
-                        notes.map((note) => {
+                        notes?.map((note) => {
                             return<div className="w-50 p-3 mx-auto p-2 shadow p-3 mb-5 bg-body-tertiary rounded" key={note.id}>
                                 <div className="card text-center " key={note.id}>
                                     <div className="card-body">
@@ -113,6 +142,14 @@ export const ProjectDetails = () => {
                             </div>
                         })
                     }
+                    <Popup trigger={<button> Delete Project</button>} position={"right center"}> 
+                <div> Are you sure you want to delete me? This cannot be undone. Remember you can edit the project details (including visibility) with the button on the top of the page 
+                    <div>
+                    <button onClick={() => deleteProject(project_id)
+                    .then(() => navigate("/projectList"))}>Delete</button>
+                    </div> 
+                </div>
+            </Popup> 
                 </div>
                 : ""
             }
