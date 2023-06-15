@@ -39,8 +39,8 @@ export const Login = () => {
                     <h1>Craft Site</h1>
                     <h2>Please sign in</h2>
                     <fieldset>
-                        <label htmlFor="inputUsername"> Username address </label>
-                        <input ref={username} type="username" id="username" className="form-control" placeholder="Username address" required autoFocus />
+                        <label htmlFor="inputUsername"> Username </label>
+                        <input ref={username} type="username" id="username" className="form-control" placeholder="Username" required autoFocus />
                     </fieldset>
                     <fieldset>
                         <label htmlFor="inputPassword"> Password </label>

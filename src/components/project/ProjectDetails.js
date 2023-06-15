@@ -48,7 +48,7 @@ export const ProjectDetails = () => {
 
     return <article>
         <div className="center">
-        <h2 >{project.name}</h2>
+        <h2 >{project.name} by {project.creator_name}</h2>
         <p>{project.description}</p>
         {project.pattern_url ? <button className="button is-link" type="button"><Link to={project.pattern_url} className="link" target="_blank" rel="noreferrer noopener" > Link to Pattern </Link></button> : ""}
         

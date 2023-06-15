@@ -109,7 +109,7 @@ export const UserProfile = () => {
                             <div className="card text-center ">
                                 <img src={post.image} className="card-img-top" alt={post.project_name}/>
                                 <div className="card-body">
-                                    <h5 className="card-title"><Link to={`projectDetails/${post.project}`} >{post.project_name} by {post.creator_name}</Link></h5>
+                                    <h5 className="card-title"><Link to={`/projectDetails/${post.project}`} >{post.project_name} by {post.creator_name}</Link></h5>
                                     <p className="card-text">{post.post}</p>
                                     <div className="card-footer tags"><small className="text-body-secondary"> <p>Tags: </p>
                                     {
@@ -125,7 +125,7 @@ export const UserProfile = () => {
                         return <div className="w-50 p-3 mx-auto p-2 shadow p-3 mb-5 bg-body-tertiary rounded" key={post.id}>
                         <div className="card text-center " key={post.id}>
                             <div className="card-body">
-                                <h5 className="card-title"><Link to={`projectDetails/${post.project}`}>{post.project_name} by {post.creator_name}</Link></h5>
+                                <h5 className="card-title"><Link to={`/projectDetails/${post.project}`}>{post.project_name} by {post.creator_name}</Link></h5>
                                 <p className="card-text">{post.post}</p>
                                 <div className="card-footer tags"><small className="text-body-secondary"> <p>Tags: </p>
                                     {
