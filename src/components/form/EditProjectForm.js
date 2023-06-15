@@ -92,7 +92,7 @@ export const EditProjectForm = () => {
             }}/> 
             </fieldset>
             <fieldset>
-                <label>Would you like to hide this project from other users? </label>
+                <label>Would you like to hide this project from other users? Remember that notes on public projects are always private</label>
                 <div>
                 <input type="radio" checked={projectInfo.hidden} name="hidden" value="true" onChange={hidden}/> 
                 <label>yes, I would like to keep this project to myself</label>

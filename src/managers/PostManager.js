@@ -18,8 +18,37 @@ export const newPost = (post) => {
     })
 }
 
+export const editPost = (post) => {
+    return fetch(`http://localhost:8000/posts/${post.id}`, {
+        method: "PUT",
+        headers:{
+            "Content-Type": "application/json",
+            "Authorization": `Token ${localStorage.getItem("token")}`
+        }, 
+        body: JSON.stringify(post)
+    })
+}
+
+export const getCurrentPost = (postId) => {
+    return fetch(`http://localhost:8000/posts/${postId}`, {
+        headers:{
+            "Authorization": `Token ${localStorage.getItem("token")}`
+        }
+    })
+        .then(response => response.json())
+}
+
 export const getProjectPosts = (project_id) => {
     return fetch(`http://localhost:8000/posts?project_id=${project_id}`, {
+        headers:{
+            "Authorization": `Token ${localStorage.getItem("token")}`
+        }, 
+    })
+    .then(response => response.json())
+}
+
+export const getUserPosts = (user_id) => {
+    return fetch(`http://localhost:8000/posts?user_id=${user_id}`, {
         headers:{
             "Authorization": `Token ${localStorage.getItem("token")}`
         }, 

@@ -1,5 +1,5 @@
 export const getMyProfile = (user_id) => {
-    return fetch(`http://localhost:8000/profile/${user_id}`, {
+    return fetch(`http://localhost:8000/profiles/${user_id}`, {
         headers:{
             "Authorization": `Token ${localStorage.getItem("token")}`
         }
@@ -7,7 +7,7 @@ export const getMyProfile = (user_id) => {
         .then(response => response.json())
 }
 export const updateProfile = (user) => {
-    return fetch(`http://localhost:8000/serviceTickets/${user.id}`, {
+    return fetch(`http://localhost:8000/profiles/${user.id}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",

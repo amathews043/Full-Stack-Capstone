@@ -6,6 +6,7 @@ import { getCurrentProject, getProjectNotes, deleteProjectNote, deleteProject } 
 import { getProjectPosts, deletePost } from "../../managers/PostManager";
 import { Note } from "../note/Note";
 import "./project.css"
+import { EditPostForm } from "../form/EditPostForm";
 
 export const ProjectDetails = () => {
     const navigate = useNavigate()
@@ -39,6 +40,12 @@ export const ProjectDetails = () => {
         });
     };
 
+    const updateProjectPosts = (projectId) => {
+        getProjectPosts(projectId).then((data) => {
+            setPosts(data);
+        });
+    };
+
     return <article>
         <div className="center">
         <h2 >{project.name}</h2>
@@ -68,7 +75,8 @@ export const ProjectDetails = () => {
                                     <h5 className="card-title">{post.project_name} by {post.creator_name}</h5>
                                     <p className="card-text">{post.post}</p>
                                     {
-                                        post.user === user ? <div><button> Edit Post </button> 
+                                        post.user === user ? <div>
+                                            <EditPostForm postId={post.id} projectId={post.project} updateProjectPosts={updateProjectPosts}/>
                                         <Popup trigger={<button> Delete Post</button>} position={"right center"}> 
                                         <div> Are you sure you want to delete me?  <div>
                                             <button onClick={() => deletePost(post.id)
@@ -94,9 +102,10 @@ export const ProjectDetails = () => {
                                 <h5 className="card-title">{post.project_name} by {post.creator_name}</h5>
                                 <p className="card-text">{post.post}</p>
                                 {
-                                    post.user === user ? <div><button> Edit Post </button> 
+                                    post.user === user ? <div>
+                                        <EditPostForm postId={post.id} projectId={post.project} updateProjectPosts={updateProjectPosts}/>
                                     <Popup trigger={<button> Delete Post</button>} position={"right center"}> 
-                                    <div> Are you sure you want to delete me?  <div>
+                                    <div> Are you sure you want to delete me? This cannot be undone <div>
                                         <button onClick={() => deletePost(post.id)
                                         .then(() => getProjectPosts(project.id).then(data => setPosts(data)))}>Delete</button></div> </div>
                                     </Popup> 
@@ -132,7 +141,7 @@ export const ProjectDetails = () => {
                                         }}
                                         > Edit Note </button> 
                                         <Popup trigger={<button> Delete Note</button>} position={"right center"}> 
-                                        <div> Are you sure you want to delete me?  <div>
+                                        <div> Are you sure you want to delete me? This cannot be undone <div>
                                             <button onClick={() => deleteProjectNote(note.id)
                                             .then(() => getProjectNotes(project.id).then(data => setNotes(data)))}>Delete</button></div> </div>
                                         </Popup> 
