@@ -34,6 +34,7 @@ export const newProject = (project) => {
         }, 
         body: JSON.stringify(project)
     })
+    .then(response => response.json())
 }
 
 export const editProject = (project) => {

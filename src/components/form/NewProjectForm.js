@@ -38,7 +38,7 @@ export const NewProjectForm = () => {
         if(!newProjectInfo.name || !newProjectInfo.description){
             setErrorMessage("Please Complete All Required Fields")
         } else{
-            newProject(newProjectInfo).then(() => (navigate(`/projectDetails/${newProjectInfo.id}`)))
+            newProject(newProjectInfo).then((data) => (navigate(`/projectDetails/${data.id}`)))
         }
     }
 
