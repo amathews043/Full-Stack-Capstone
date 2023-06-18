@@ -77,7 +77,11 @@ export const NewPostForm = () => {
             <button type="button" onClick={() => {
                 if(postTags && postProject){
                     setErrorMessage("")
-                    autofillPost(postProject).then((data) => setPostText(data.message))
+                    const postForAutofill = {
+                        project: postProject, 
+                        tags: postTags
+                    }
+                    autofillPost(postForAutofill).then((data) => setPostText(data.message))
                 }
                 else{
                     setErrorMessage("Please add Project and Tags to your post")
