@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { getTags } from "../../managers/PostManager"
 import { getMyProjects } from "../../managers/ProjectManager"
-import { newPost } from "../../managers/PostManager"
+import { newPost, autofillPost } from "../../managers/PostManager"
 import "../post/post.css"
 import { UploadWidget } from "./UploadWidget";
 
@@ -74,6 +74,15 @@ export const NewPostForm = () => {
                     </input>
                 </div>
             </fieldset>
+            <button type="button" onClick={() => {
+                if(postTags && postProject){
+                    setErrorMessage("")
+                    autofillPost(postProject).then((data) => setPostText(data.message))
+                }
+                else{
+                    setErrorMessage("Please add Project and Tags to your post")
+                }
+            }}>AutoFill Post?</button>
             <fieldset>
                 <div className="form-group field"> 
                 <label className="label"htmlFor="location">Project:* </label>
