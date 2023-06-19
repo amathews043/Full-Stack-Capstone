@@ -23,7 +23,7 @@ export const UserProfile = () => {
     }, [userId])
 
     useEffect(() => {
-        getUserPosts(userId).then(data => setUserPosts(data))
+        getUserPosts(userId).then(data => setUserPosts(data.reverse()))
     }, [userId])
 
     const setImageURL = (url) => {
@@ -101,6 +101,8 @@ export const UserProfile = () => {
         <Col xs={6} md={4} fluid > <h5>My Bio:</h5>{userProfile.bio}  </Col>
         </Row>
     </Container>
+
+    <h3>All My Posts</h3>
 
     {
                 userPosts.map((post) => {
