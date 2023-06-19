@@ -34,7 +34,7 @@ export const EditProjectForm = () => {
 
 
     useEffect(() => {
-        getProjects().then(data => setProjects(data))
+        getProjects().then(data => setProjects(data.filter(project => project.id !== parseInt(project_id))))
     }, [])
 
     const hidden = (evt) => {
