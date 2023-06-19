@@ -133,7 +133,7 @@ export const EditProjectForm = () => {
                             let newInspiration = parseInt(evt.target.value)
                             if(projectInfo.inspirations.includes(newInspiration)){
                                 let index = projectInfo.inspirations.indexOf(newInspiration)
-                                projects.inspirations.splice(index, 1)
+                                projectInfo.inspirations.splice(index, 1)
                             }else
                             projectInfo.inspirations.push(newInspiration)
                         }
