@@ -4,6 +4,7 @@ import { getMyProjects } from "../../managers/ProjectManager"
 import { newPost, autofillPost } from "../../managers/PostManager"
 import "../post/post.css"
 import { UploadWidget } from "./UploadWidget";
+import Button from '@mui/material/Button';
 
 export const NewPostForm = () => {
     const [tags, setTags] = useState([])
@@ -54,7 +55,7 @@ export const NewPostForm = () => {
 
     return (
         <div className="text-center post-list-header">
-        <button type="button" className="text-center toggle post-list-header" onClick={() => {setForm(!formShown)}}> Create a New Post</button>
+        <Button type="button" className="text-center toggle post-list-header" onClick={() => {setForm(!formShown)}}> Create a New Post</Button>
         {   
             formShown ? 
             <form onSubmit={submit}>
@@ -116,7 +117,7 @@ export const NewPostForm = () => {
             </fieldset>
             {
                 autofillLoading ? "Loading..." : <div>
-                    <button type="button" onClick={() => {
+                    <Button type="button" onClick={() => {
                 if(postTags && postProject){
                     setErrorMessage("")
                     const postForAutofill = {
@@ -132,7 +133,7 @@ export const NewPostForm = () => {
                 else{
                     setErrorMessage("Please add Project and Tags to your post")
                 }
-            }}>AutoFill Post?</button>
+            }}>AutoFill Post?</Button>
             <fieldset>
                 <div> 
                     <textarea required autoFocus
@@ -154,7 +155,7 @@ export const NewPostForm = () => {
             
             <UploadWidget setImageURL={setImageURL}/>
 
-            <button type="submit" className="post-list-header"> Submit</button>
+            <Button type="submit" className="post-list-header"> Submit</Button>
             </form>
             : 
             ""

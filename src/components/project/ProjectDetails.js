@@ -1,6 +1,11 @@
 import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom"
 import Popup from 'reactjs-popup';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Container from '@mui/material/Container';
 
 import { getCurrentProject, getProjectNotes, deleteProjectNote, deleteProject } from "../../managers/ProjectManager";
 import { getProjectPosts, deletePost } from "../../managers/PostManager";
@@ -46,14 +51,14 @@ export const ProjectDetails = () => {
         });
     };
 
-    return <article>
+    return <Container>
         <div className="center">
         <h2 >{project.name} by {project.creator_name}</h2>
         <p>{project.description}</p>
-        {project.pattern_url ? <button className="button is-link" type="button"><Link to={project.pattern_url} className="link" target="_blank" rel="noreferrer noopener" > Link to Pattern </Link></button> : ""}
+        {project.pattern_url ? <Button className="button is-link" type="button"><Link to={project.pattern_url} className="link" target="_blank" rel="noreferrer noopener" > Link to Pattern </Link></Button> : ""}
         
         {
-            project.user_id === user ? <button onClick={() => navigate(`/editProject/${project.id}`)}>Edit Project</button>
+            project.user_id === user ? <Button onClick={() => navigate(`/editProject/${project.id}`)}>Edit Project</Button>
             : ""
         }
 
@@ -68,7 +73,7 @@ export const ProjectDetails = () => {
         {
                 posts.map((post) => {
                     if(post.image ){
-                        return <div className="w-50 p-3 mx-auto p-2 shadow p-3 mb-5 bg-body-tertiary rounded " key={post.id}>
+                        return <div key={post.id}>
                             <div className="card text-center ">
                                 <img src={post.image} className="card-img-top" alt={post.project_name}/>
                                 <div className="card-body">
@@ -77,10 +82,10 @@ export const ProjectDetails = () => {
                                     {
                                         post.user === user ? <div>
                                             <EditPostForm postId={post.id} projectId={post.project} updateProjectPosts={updateProjectPosts}/>
-                                        <Popup trigger={<button> Delete Post</button>} position={"right center"}> 
+                                        <Popup trigger={<Button> Delete Post</Button>} position={"right center"}> 
                                         <div> Are you sure you want to delete me?  <div>
-                                            <button onClick={() => deletePost(post.id)
-                                            .then(() => getProjectPosts(project.id).then(data => setPosts(data)))}>Delete</button></div> </div>
+                                            <Button onClick={() => deletePost(post.id)
+                                            .then(() => getProjectPosts(project.id).then(data => setPosts(data)))}>Delete</Button></div> </div>
                                         </Popup> 
                                         </div>
                                         : ""
@@ -104,10 +109,10 @@ export const ProjectDetails = () => {
                                 {
                                     post.user === user ? <div>
                                         <EditPostForm postId={post.id} projectId={post.project} updateProjectPosts={updateProjectPosts}/>
-                                    <Popup trigger={<button> Delete Post</button>} position={"right center"}> 
+                                    <Popup trigger={<Button> Delete Post</Button>} position={"right center"}> 
                                     <div> Are you sure you want to delete me? This cannot be undone <div>
-                                        <button onClick={() => deletePost(post.id)
-                                        .then(() => getProjectPosts(project.id).then(data => setPosts(data)))}>Delete</button></div> </div>
+                                        <Button onClick={() => deletePost(post.id)
+                                        .then(() => getProjectPosts(project.id).then(data => setPosts(data)))}>Delete</Button></div> </div>
                                     </Popup> 
                                     </div>
                                     : ""
@@ -136,14 +141,14 @@ export const ProjectDetails = () => {
                                 <div className="card text-center " key={note.id}>
                                     <div className="card-body">
                                         <p className="card-text">{note.note}</p>
-                                        <div><button onClick={() => {
+                                        <div><Button onClick={() => {
                                         navigate(`/editNote/${note.id}`)
                                         }}
-                                        > Edit Note </button> 
-                                        <Popup trigger={<button> Delete Note</button>} position={"right center"}> 
+                                        > Edit Note </Button> 
+                                        <Popup trigger={<Button> Delete Note</Button>} position={"right center"}> 
                                         <div> Are you sure you want to delete me? This cannot be undone <div>
-                                            <button onClick={() => deleteProjectNote(note.id)
-                                            .then(() => getProjectNotes(project.id).then(data => setNotes(data)))}>Delete</button></div> </div>
+                                            <Button onClick={() => deleteProjectNote(note.id)
+                                            .then(() => getProjectNotes(project.id).then(data => setNotes(data)))}>Delete</Button></div> </div>
                                         </Popup> 
                                         </div>
                                     </div>
@@ -151,11 +156,11 @@ export const ProjectDetails = () => {
                             </div>
                         })
                     }
-                    <Popup trigger={<button> Delete Project</button>} position={"right center"}> 
+                    <Popup trigger={<Button> Delete Project</Button>} position={"right center"}> 
                 <div> Are you sure you want to delete me? This cannot be undone. Remember you can edit the project details (including visibility) with the button on the top of the page 
                     <div>
-                    <button onClick={() => deleteProject(project_id)
-                    .then(() => navigate("/projectList"))}>Delete</button>
+                    <Button onClick={() => deleteProject(project_id)
+                    .then(() => navigate("/projectList"))}>Delete</Button>
                     </div> 
                 </div>
             </Popup> 
@@ -163,7 +168,7 @@ export const ProjectDetails = () => {
                 : ""
             }
         </div>
-    </article>
+    </Container>
 }
 
 

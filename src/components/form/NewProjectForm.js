@@ -1,6 +1,7 @@
 import { newProject } from "../../managers/ProjectManager";
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
+import Button from '@mui/material/Button';
 
 import { getProjects } from "../../managers/ProjectManager";
 
@@ -137,7 +138,7 @@ export const NewProjectForm = () => {
                 </div>
                 </div>
             </fieldset>
-            <button type="submit" className="post-list-header" onClick={(clickEvt) => submit(clickEvt)}> Submit</button>
+            <Button type="submit" className="post-list-header" onClick={(clickEvt) => submit(clickEvt)}> Submit</Button>
         </form>
     </article>
 }

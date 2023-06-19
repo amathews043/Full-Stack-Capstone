@@ -1,6 +1,7 @@
 import React, { useRef } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { registerUser } from "../../managers/AuthManager"
+import Button from '@mui/material/Button';
 
 export const Register = () => {
     const firstName = useRef()
@@ -41,7 +42,7 @@ export const Register = () => {
 
             <dialog className="dialog dialog--password" ref={passwordDialog}>
                 <div>Passwords do not match</div>
-                <button className="button--close" onClick={e => passwordDialog.current.close()}>Close</button>
+                <Button className="button--close" onClick={e => passwordDialog.current.close()}>Close</Button>
             </dialog>
 
             <form className="form--login" onSubmit={handleRegister}>
@@ -73,7 +74,7 @@ export const Register = () => {
                 <fieldset style={{
                     textAlign: "center"
                 }}>
-                    <button className="btn btn-1 btn-sep icon-send" type="submit">Register</button>
+                    <Button className="btn btn-1 btn-sep icon-send" type="submit">Register</Button>
                 </fieldset>
             </form>
             <section className="link--register">

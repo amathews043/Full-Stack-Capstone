@@ -1,0 +1,11 @@
+.navbar-item {
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+    margin-right: 25px;
+
+}
+
+.navbar-left {
+    margin-right: auto;
+}

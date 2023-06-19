@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { getMyProjects } from "../../managers/ProjectManager.js"
 import { useNavigate, Link } from "react-router-dom"
 import "./project.css"
+import Button from '@mui/material/Button';
 
 export const ProjectList = () => {
     const [projects, setProjects] = useState([])
@@ -14,7 +15,7 @@ export const ProjectList = () => {
 
     return (
         <article className="text-center project-list-header"> 
-            <button onClick={() => navigate("/ProjectForm")}>Start a New Project</button>
+            <Button onClick={() => navigate("/ProjectForm")}>Start a New Project</Button>
             {
                 projects.map((project) => {
                         if (project.preview_image){

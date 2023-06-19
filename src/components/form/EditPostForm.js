@@ -3,6 +3,7 @@ import { getTags, getCurrentPost, editPost, getProjectPosts } from "../../manage
 import { getMyProjects } from "../../managers/ProjectManager"
 import "../post/post.css"
 import { UploadWidget } from "./UploadWidget";
+import Button from '@mui/material/Button';
 
 
 export const EditPostForm = ({postId, projectId, updateProjectPosts}) => {
@@ -67,7 +68,7 @@ export const EditPostForm = ({postId, projectId, updateProjectPosts}) => {
 
     return (
         <div className="text-center post-list-header">
-        <button type="button" className="text-center toggle post-list-header" onClick={() => {setForm(!formShown)}}> Edit Post</button>
+        <Button type="button" className="text-center toggle post-list-header" onClick={() => {setForm(!formShown)}}> Edit Post</Button>
         {   
             formShown ? 
             <form onSubmit={submit}>
@@ -146,8 +147,8 @@ export const EditPostForm = ({postId, projectId, updateProjectPosts}) => {
             
             <UploadWidget setImageURL={setImageURL}/>
 
-            <button type="submit" className="post-list-header"> Submit</button>
-            <button type="button" className="ost-list-header" onClick={() => setForm(!formShown)}> Cancel</button>
+            <Button type="submit" className="post-list-header"> Submit</Button>
+            <Button type="button" className="ost-list-header" onClick={() => setForm(!formShown)}> Cancel</Button>
             </form>
             : 
             ""

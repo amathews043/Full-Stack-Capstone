@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import "../project/project.css"
 import { editNote, getSingleNote } from "../../managers/ProjectManager";
 import { useParams, useNavigate } from "react-router-dom"
+import Button from '@mui/material/Button';
 
 export const EditNote = () => {
     const navigate = useNavigate()
@@ -38,7 +39,7 @@ export const EditNote = () => {
                     setNote(copy)
                 }}> </textarea>
             </fieldset>
-            <button type="submit" >Submit </button>
+            <Button type="submit" >Submit </Button>
         </form> 
     </div>
 }

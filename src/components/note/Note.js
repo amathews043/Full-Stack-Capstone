@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "../project/project.css"
 import { newProjectNote } from "../../managers/ProjectManager";
+import Button from '@mui/material/Button';
 
 export const Note = ({projectId, updateProjectNotes}) => {
     const [showForm, setShowForm] = useState(false)
@@ -22,7 +23,7 @@ export const Note = ({projectId, updateProjectNotes}) => {
         }
     }
     return<div>
-        <button onClick={() => {setShowForm(!showForm)}} className="newNoteHeader">Add a New Note</button>
+        <Button onClick={() => {setShowForm(!showForm)}} className="newNoteHeader">Add a New Note</Button>
         <p className="alert">{errorMessage}</p>
         {
             showForm ? <form onSubmit={submitButton}>
@@ -33,7 +34,7 @@ export const Note = ({projectId, updateProjectNotes}) => {
                         setNewNote(copy)
                     }}> </textarea>
                 </fieldset>
-                <button type="submit" >Submit </button>
+                <Button type="submit" >Submit </Button>
             </form> : ""
         }
     </div>
