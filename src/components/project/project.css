@@ -31,3 +31,8 @@
 [data-popup='tooltip'].popup-overlay {
     background: transparent;
 }
+
+.margin-bottom-and-top-20px{
+    margin-bottom: 20px;
+    margin-top: 20px;
+}

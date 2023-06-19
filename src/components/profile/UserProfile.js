@@ -1,16 +1,23 @@
 import { useState, useEffect } from "react";
 import Container from '@mui/material/Container';
-import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import Popup from 'reactjs-popup';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Unstable_Grid2';
 import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 
 import { getMyProfile, updateProfile } from "../../managers/ProfileManager";
 import { getUserPosts } from "../../managers/PostManager";
 import { ProfilePictureUploadWidget } from "./ProfilePictureUploadWidget";
 
 export const UserProfile = () => {
+    const navigate = useNavigate()
     const [userProfile, setUserProfile] = useState({})
     const [userPosts, setUserPosts] = useState([])
     const userId = parseInt(localStorage.getItem('user_id'))
@@ -108,44 +115,43 @@ export const UserProfile = () => {
         </Container>
 
         <h3>All My Posts</h3>
+        <Container maxWidth="sm">
+        <Stack spacing={4}>
+                {
+                    userPosts.map((post) => {
+                        return <Card key={post.id} sx={{ maxWidth: 800 }}>
+                            <CardContent>
+                                {
+                                    post.image ?
+                                        <CardMedia
+                                            sx={{ height: 300 }}
+                                            image={post.image}
+                                            title={post.project_name}
+                                        />
+                                        :
+                                        <></>
+                                }
+                                <Typography gutterBottom variant="h5" component="div">
+                                    <Button onClick={() => navigate(`projectDetails/${post.project}`)}>
+                                        {post.project_name} by {post.creator_name}
+                                    </Button>
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary">
+                                    {post.post}
+                                </Typography>
+                                <Stack direction="row" spacing={2}>
+                                    {
+                                        post.tags.map((tag) => {
+                                            return <Chip label={tag.tag} size="small" />
+                                        })
+                                    }
+                                </Stack>
+                            </CardContent>
+                        </Card>
 
-        {
-            userPosts.map((post) => {
-                if (post.image) {
-                    return <div className="w-50 p-3 mx-auto p-2 shadow p-3 mb-5 bg-body-tertiary rounded " key={post.id}>
-                        <div className="card text-center ">
-                            <img src={post.image} className="card-img-top" alt={post.project_name} />
-                            <div className="card-body">
-                                <h5 className="card-title"><Link to={`/projectDetails/${post.project}`} >{post.project_name} by {post.creator_name}</Link></h5>
-                                <p className="card-text">{post.post}</p>
-                                <div className="card-footer tags"><small className="text-body-secondary"> <p>Tags: </p>
-                                    {
-                                        post.tags.map((tag) => {
-                                            return <aside key={tag.id} className="inline"> <li> {tag.tag} </li></aside>
-                                        })
-                                    }
-                                </small></div>
-                            </div>
-                        </div>
-                    </div>
-                } else {
-                    return <div className="w-50 p-3 mx-auto p-2 shadow p-3 mb-5 bg-body-tertiary rounded" key={post.id}>
-                        <div className="card text-center " key={post.id}>
-                            <div className="card-body">
-                                <h5 className="card-title"><Link to={`/projectDetails/${post.project}`}>{post.project_name} by {post.creator_name}</Link></h5>
-                                <p className="card-text">{post.post}</p>
-                                <div className="card-footer tags"><small className="text-body-secondary"> <p>Tags: </p>
-                                    {
-                                        post.tags.map((tag) => {
-                                            return <aside className="inline" key={tag.id}> <li> {tag.tag} </li></aside>
-                                        })
-                                    }
-                                </small></div>
-                            </div>
-                        </div>
-                    </div>
+                    })
                 }
-            })
-        }
+            </Stack>
+            </Container>
     </article>
 }
