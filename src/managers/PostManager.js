@@ -18,6 +18,18 @@ export const newPost = (post) => {
     })
 }
 
+export const autofillPost = (post) => {
+    return fetch("http://localhost:8000/posts/autofillPost", {
+        method: "POST",
+        headers:{
+            "Content-Type": "application/json",
+            "Authorization": `Token ${localStorage.getItem("token")}`
+        }, 
+        body: JSON.stringify(post)
+    })
+    .then(res => res.json())
+}
+
 export const editPost = (post) => {
     return fetch(`http://localhost:8000/posts/${post.id}`, {
         method: "PUT",

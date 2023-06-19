@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { getTags } from "../../managers/PostManager"
 import { getMyProjects } from "../../managers/ProjectManager"
-import { newPost } from "../../managers/PostManager"
+import { newPost, autofillPost } from "../../managers/PostManager"
 import "../post/post.css"
 import { UploadWidget } from "./UploadWidget";
 
@@ -14,6 +14,7 @@ export const NewPostForm = () => {
     const [postProject, setPostProject] = useState("")
     const [postImage, setPostImage] = useState("")
     const [errorMessage, setErrorMessage] = useState("")
+    const [autofillLoading, setAutofillLoading] = useState(false)
 
     const [formShown, setForm] = useState(false)
 
@@ -58,22 +59,6 @@ export const NewPostForm = () => {
             formShown ? 
             <form onSubmit={submit}>
             <p className="alert">{errorMessage}</p>
-            <fieldset>
-                <div> 
-                    <input required autoFocus
-                    type="text"
-                    className="form-control input"
-                    placeholder="What would you like to say about this project?"
-                    value={postText}
-                    onChange={
-                        (evt => {
-                            setPostText(evt.target.value)
-                        })
-                    }
-                    >
-                    </input>
-                </div>
-            </fieldset>
             <fieldset>
                 <div className="form-group field"> 
                 <label className="label"htmlFor="location">Project:* </label>
@@ -129,6 +114,44 @@ export const NewPostForm = () => {
                 </div>
                 </div>
             </fieldset>
+            {
+                autofillLoading ? "Loading" : <div>
+                    <button type="button" onClick={() => {
+                if(postTags && postProject){
+                    setErrorMessage("")
+                    const postForAutofill = {
+                        project: postProject, 
+                        tags: postTags
+                    }
+                    setAutofillLoading(true)
+                    autofillPost(postForAutofill).then((data) => {
+                        setPostText(data.message)
+                        setAutofillLoading(false)
+                    })
+                }
+                else{
+                    setErrorMessage("Please add Project and Tags to your post")
+                }
+            }}>AutoFill Post?</button>
+            <fieldset>
+            <label>Project Post:</label>
+                <div> 
+                    <textarea required autoFocus
+                    type="text"
+                    className="form-control input"
+                    placeholder="What would you like to say about this project?"
+                    value={postText}
+                    onChange={
+                        (evt => {
+                            setPostText(evt.target.value)
+                        })
+                    }
+                    >
+                    </textarea>
+                </div>
+            </fieldset>
+                </div>
+            }
             
             <UploadWidget setImageURL={setImageURL}/>
 
