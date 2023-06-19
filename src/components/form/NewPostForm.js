@@ -115,7 +115,7 @@ export const NewPostForm = () => {
                 </div>
             </fieldset>
             {
-                autofillLoading ? "Loading" : <div>
+                autofillLoading ? "Loading..." : <div>
                     <button type="button" onClick={() => {
                 if(postTags && postProject){
                     setErrorMessage("")
@@ -134,7 +134,6 @@ export const NewPostForm = () => {
                 }
             }}>AutoFill Post?</button>
             <fieldset>
-            <label>Project Post:</label>
                 <div> 
                     <textarea required autoFocus
                     type="text"

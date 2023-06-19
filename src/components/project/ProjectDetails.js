@@ -24,7 +24,7 @@ export const ProjectDetails = () => {
 
     useEffect(() => {
         getProjectPosts(project_id).then((data) => {
-            setPosts(data)
+            setPosts(data.reverse())
         })
     }, [project_id])
 
