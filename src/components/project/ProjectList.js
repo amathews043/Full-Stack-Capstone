@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { getMyProjects } from "../../managers/ProjectManager.js"
-import { useNavigate, Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import "./project.css"
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';

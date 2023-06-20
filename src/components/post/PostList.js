@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { getPosts } from "../../managers/PostManager.js"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { NewPostForm } from "../form/NewPostForm.js"
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';

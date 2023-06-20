@@ -6,6 +6,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Container from '@mui/material/Container';
+import Stack from '@mui/material/Stack';
 
 import { getCurrentProject, getProjectNotes, deleteProjectNote, deleteProject } from "../../managers/ProjectManager";
 import { getProjectPosts, deletePost } from "../../managers/PostManager";
@@ -61,55 +62,56 @@ export const ProjectDetails = () => {
                 project.user_id === user ? <Button onClick={() => navigate(`/editProject/${project.id}`)}>Edit Project</Button>
                     : ""
             }
-
             <h4>This Project Was Inspired By:</h4>
+
 
             {
                 project.inspirations?.map((inspiration) => {
                     return <Link to={`/projectDetails/${inspiration.id}`} key={inspiration.id} ><li> {inspiration.name} </li> </Link>
                 })
             }
-
-            {
-                posts.map((post) => {
-                    return <Card key={post.id}>
-                        <CardContent>
-                            {
-                                post.image ?
-                                    <CardMedia
-                                        sx={{ height: 300 }}
-                                        image={post.image}
-                                        title={post.project_name}
-                                    />
-                                    :
-                                    <></>
-                            }
-                            <div className="card-body">
-                                <h5 className="card-title">{post.project_name} by {post.creator_name}</h5>
-                                <p className="card-text">{post.post}</p>
+            <Stack spacing={10}>
+                {
+                    posts.map((post) => {
+                        return <Card key={post.id}>
+                            <CardContent>
                                 {
-                                    post.user === user ? <div>
-                                        <EditPostForm postId={post.id} projectId={post.project} updateProjectPosts={updateProjectPosts} />
-                                        <Popup trigger={<Button> Delete Post</Button>} position={"right center"}>
-                                            <div> Are you sure you want to delete me?  <div>
-                                                <Button onClick={() => deletePost(post.id)
-                                                    .then(() => getProjectPosts(project.id).then(data => setPosts(data)))}>Delete</Button></div> </div>
-                                        </Popup>
-                                    </div>
-                                        : ""
+                                    post.image ?
+                                        <CardMedia
+                                            sx={{ height: 300 }}
+                                            image={post.image}
+                                            title={post.project_name}
+                                        />
+                                        :
+                                        <></>
                                 }
-                                <div className="card-footer tags"><small className="text-body-secondary"> <p>Tags: </p>
+                                <div className="card-body">
+                                    <h5 className="card-title">{post.project_name} by {post.creator_name}</h5>
+                                    <p className="card-text">{post.post}</p>
                                     {
-                                        post.tags.map((tag) => {
-                                            return <aside key={tag.id} className="inline"> <li> {tag.tag} </li></aside>
-                                        })
+                                        post.user === user ? <div>
+                                            <EditPostForm postId={post.id} projectId={post.project} updateProjectPosts={updateProjectPosts} />
+                                            <Popup trigger={<Button> Delete Post</Button>} position={"right center"}>
+                                                <div> Are you sure you want to delete me?  <div>
+                                                    <Button onClick={() => deletePost(post.id)
+                                                        .then(() => getProjectPosts(project.id).then(data => setPosts(data)))}>Delete</Button></div> </div>
+                                            </Popup>
+                                        </div>
+                                            : ""
                                     }
-                                </small></div>
-                            </div>
-                        </CardContent>
-                    </Card>
-                })
-            }
+                                    <div className="card-footer tags"><small className="text-body-secondary"> <p>Tags: </p>
+                                        {
+                                            post.tags.map((tag) => {
+                                                return <aside key={tag.id} className="inline"> <li> {tag.tag} </li></aside>
+                                            })
+                                        }
+                                    </small></div>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    })
+                }
+            </Stack>
 
             {
                 project.user_id === user ? <div>

@@ -122,7 +122,7 @@ export const EditPostForm = ({ postId, projectId, updateProjectPosts }) => {
                                 <TextField required autoFocus
                                     multiline
                                     type="text"
-                                    className="form-control textarea"
+                                    className="form-control"
                                     placeholder="What would you like to say about this project?"
                                     value={postText}
                                     onChange={
