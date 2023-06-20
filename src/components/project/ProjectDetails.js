@@ -47,7 +47,7 @@ export const ProjectDetails = () => {
 
     const updateProjectPosts = (projectId) => {
         getProjectPosts(projectId).then((data) => {
-            setPosts(data);
+            setPosts(data.reverse());
         });
     };
 

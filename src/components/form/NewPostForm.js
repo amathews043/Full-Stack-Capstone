@@ -5,6 +5,14 @@ import { newPost, autofillPost } from "../../managers/PostManager"
 import "../post/post.css"
 import { UploadWidget } from "./UploadWidget";
 import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import TextField from '@mui/material/TextField';
+import Stack from '@mui/material/Stack';
+import Autocomplete from '@mui/material/Autocomplete';
 
 export const NewPostForm = () => {
     const [tags, setTags] = useState([])
@@ -27,14 +35,14 @@ export const NewPostForm = () => {
         evt.preventDefault()
 
         const post = {
-            post: postText, 
-            tags: postTags, 
-            project: postProject, 
+            post: postText,
+            tags: postTags,
+            project: postProject,
             image: postImage
         }
-        if(!post.post || post.tags === [] || !post.project){
+        if (!post.post || post.tags === [] || !post.project) {
             setErrorMessage("Please Complete All Required Fields")
-        } else{
+        } else {
             newPost(post)
             setForm(!formShown)
             setPostText("")
@@ -54,113 +62,89 @@ export const NewPostForm = () => {
 
 
     return (
-        <div className="text-center post-list-header">
-        <Button type="button" className="text-center toggle post-list-header" onClick={() => {setForm(!formShown)}}> Create a New Post</Button>
-        {   
-            formShown ? 
-            <form onSubmit={submit}>
-            <p className="alert">{errorMessage}</p>
-            <fieldset>
-                <div className="form-group field"> 
-                <label className="label"htmlFor="location">Project:* </label>
-                <div className="control">
-                    <div className="select">
-                    <select value={postProject} onChange={
-                        (evt) => {
-                            setPostProject(parseInt(evt.target.value))
-                        }
-                    }> 
-                    <option key="0" value="0"> Please Choose a Project</option>
-                    {
-                    myProjects.map((project) => {
-                        return <option value={project.id} key={project.id} > {project.name}</option>
-                    })
-
-                    }
-                    
-                    </select>
-                    
-                    </div>
-
-                </div>
-                </div>
-            </fieldset>
-            <fieldset>
-                <div className="form-group field"> 
-                <label className="label"htmlFor="tags">Tags:* </label>
-                <div className="control">
-                    <div className="select">
-                    <select value={postTags} multiple={true} onChange={
-                        (evt) => {
-                            let newTag = parseInt(evt.target.value)
-                            if(postTags.includes(newTag)){
-                                let index = postTags.indexOf(newTag)
-                                postTags.splice(index, 1)
-                            }else
-                            postTags.push(newTag)
-                        }
-                    }> 
-                    <option key="0" value="0"> Choose some Tags For Your Post</option>
-                    {
-                    tags.map((tag) => {
-                        return <option value={tag.id} key={tag.id} > {tag.tag}</option>
-                    })
-
-                    }
-                    
-                    </select>
-                    
-                    </div>
-
-                </div>
-                </div>
-            </fieldset>
+        <Box sx={{ minWidth: 120 }} className="text-center">
+            <Button type="button" onClick={() => { setForm(!formShown) }}> Create a New Post</Button>
             {
-                autofillLoading ? "Loading..." : <div>
-                    <Button type="button" onClick={() => {
-                if(postTags && postProject){
-                    setErrorMessage("")
-                    const postForAutofill = {
-                        project: postProject, 
-                        tags: postTags
-                    }
-                    setAutofillLoading(true)
-                    autofillPost(postForAutofill).then((data) => {
-                        setPostText(data.message)
-                        setAutofillLoading(false)
-                    })
-                }
-                else{
-                    setErrorMessage("Please add Project and Tags to your post")
-                }
-            }}>AutoFill Post?</Button>
-            <fieldset>
-                <div> 
-                    <textarea required autoFocus
-                    type="text"
-                    className="form-control input"
-                    placeholder="What would you like to say about this project?"
-                    value={postText}
-                    onChange={
-                        (evt => {
-                            setPostText(evt.target.value)
-                        })
-                    }
-                    >
-                    </textarea>
-                </div>
-            </fieldset>
-                </div>
-            }
-            
-            <UploadWidget setImageURL={setImageURL}/>
+                formShown ?
+                    <form onSubmit={submit}>
+                        <p className="alert">{errorMessage}</p>
+                        <Stack spacing={2} sx={{ width: 552 }}>
+                            <FormControl fullWidth>
+                                <InputLabel>Please Choose a Project:*</InputLabel>
+                                <Select value={postProject} label="Please Choose a Project"
+                                    onChange={
+                                        (evt) => {
+                                            setPostProject(parseInt(evt.target.value))
+                                        }
+                                    }>
+                                    {
+                                        myProjects.map((project) => {
+                                            return <MenuItem value={project.id} key={project.id} > {project.name}</MenuItem>
+                                        })
 
-            <Button type="submit" className="post-list-header"> Submit</Button>
-            </form>
-            : 
-            ""
-        }
-        </div>
+                                    }
+
+                                </Select>
+                            </FormControl>
+                            <FormControl>
+                                <Autocomplete
+                                    multiple
+                                    options={tags}
+                                    getOptionLabel={(tag) => tag.tag}
+                                    renderInput={(params) => <TextField {...params} label="Post Tags" />}
+                                    onChange={
+                                        (evt, value) => {
+                                            const value_list = value.map(value => value.id)
+                                            setPostTags(value_list)
+                                        }
+                                    }
+                                />
+                            </FormControl>
+                            {
+                                autofillLoading ? "Loading..." : <div>
+                                    <Button type="button" onClick={() => {
+                                        if (postTags && postProject) {
+                                            setErrorMessage("")
+                                            const postForAutofill = {
+                                                project: postProject,
+                                                tags: postTags
+                                            }
+                                            setAutofillLoading(true)
+                                            autofillPost(postForAutofill).then((data) => {
+                                                setPostText(data.message)
+                                                setAutofillLoading(false)
+                                            })
+                                        }
+                                        else {
+                                            setErrorMessage("Please add Project and Tags to your post")
+                                        }
+                                    }}>AutoFill Post?</Button>
+                                    <FormControl fullWidth>
+                                        <TextField required autoFocus
+                                            multiline
+                                            type="text"
+                                            className="form-control input"
+                                            placeholder="What would you like to say about this project?"
+                                            value={postText}
+                                            onChange={
+                                                (evt => {
+                                                    setPostText(evt.target.value)
+                                                })
+                                            }
+                                        />
+                                    </FormControl>
+                                </div>
+                            }
+                        </Stack>
+
+                        <UploadWidget setImageURL={setImageURL} />
+
+                        <Button type="submit" className="post-list-header"> Submit</Button>
+                    </form>
+                    :
+                    ""
+            }
+        </Box>
     );
-    
+
 }

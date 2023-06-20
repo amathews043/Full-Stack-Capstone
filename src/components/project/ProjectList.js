@@ -40,7 +40,7 @@ export const ProjectList = () => {
                             }
                     
                                     <Typography gutterBottom variant="h5" component="div">
-                                    <Button onClick={() => navigate(`projectDetails/${project.id}`)}>
+                                    <Button onClick={() => navigate(`/projectDetails/${project.id}`)}>
                                         {project.name}
                                     </Button>
                                 </Typography>

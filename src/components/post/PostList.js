@@ -54,7 +54,7 @@ export const PostList = () => {
                                 <Stack direction="row" spacing={2}>
                                     {
                                         post.tags.map((tag) => {
-                                            return <Chip label={tag.tag} size="small" />
+                                            return <Chip label={tag.tag} size="small" key={tag.id} />
                                         })
                                     }
                                 </Stack>

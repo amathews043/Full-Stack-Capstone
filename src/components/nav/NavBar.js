@@ -26,7 +26,7 @@ export const NavBar = () => {
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
                 <Toolbar>
-                    <div class="navbar-left">
+                    <div className="navbar-left">
                     <Button color="inherit" onClick={() => navigate("/")}>Home</Button>
                     <Button color="inherit" onClick={() => navigate("/projectList")}>Projects</Button>
                     <Button color="inherit" onClick={() => navigate("/myProfile")}>Profile</Button>
