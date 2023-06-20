@@ -11,6 +11,8 @@ import CardMedia from '@mui/material/CardMedia';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import FormControl from '@mui/material/FormControl';
+import { TextField } from "@mui/material";
 
 import { getMyProfile, updateProfile } from "../../managers/ProfileManager";
 import { getUserPosts } from "../../managers/PostManager";
@@ -52,33 +54,35 @@ export const UserProfile = () => {
     }
 
     return <article className="center">
-        <h2>My Profile </h2>
-        <div>
-            <Button onClick={() => setForm(!formShown)}> Edit Profile</Button>
-        </div>
-        {
-            formShown ?
-                <form onSubmit={submit}>
-                    <fieldset>
-                        <label>Bio:</label>
-                        <div>
-                            <textarea required autoFocus
-                                type="text"
-                                className="form-control textarea"
-                                value={newUserBio}
-                                onChange={(evt) => {
-                                    setNewUserBio(evt.target.value)
-                                }}
-                            >
-                            </textarea>
-                        </div>
-                    </fieldset>
-                    <ProfilePictureUploadWidget setImageURL={setImageURL} />
-                    <Button type="submit">Submit Changes</Button>
-                </form>
+        <Box sx={{ minWidth: 120 }} className="text-center">
+            <h2>My Profile </h2>
+            <div>
+                <Button onClick={() => setForm(!formShown)}> Edit Profile</Button>
+            </div>
+            {
+                formShown ?
+                    <form onSubmit={submit}>
+                        <FormControl fullWidth>
+                            <label>Bio:</label>
+                            <div>
+                                <TextField required autoFocus
+                                    multiline
+                                    type="text"
+                                    className="form-control textarea"
+                                    value={newUserBio}
+                                    onChange={(evt) => {
+                                        setNewUserBio(evt.target.value)
+                                    }}
+                                />
+                            </div>
+                        </FormControl>
+                        <ProfilePictureUploadWidget setImageURL={setImageURL} />
+                        <Button type="submit">Submit Changes</Button>
+                    </form>
 
-                : ""
-        }
+                    : ""
+            }
+        </Box>
 
         <Container maxWidth="lg">
             <Box sx={{ flexGrow: 1 }}>
@@ -116,7 +120,7 @@ export const UserProfile = () => {
 
         <h3>All My Posts</h3>
         <Container maxWidth="sm">
-        <Stack spacing={4}>
+            <Stack spacing={4}>
                 {
                     userPosts.map((post) => {
                         return <Card key={post.id} sx={{ maxWidth: 800 }}>
@@ -152,6 +156,6 @@ export const UserProfile = () => {
                     })
                 }
             </Stack>
-            </Container>
+        </Container>
     </article>
 }
