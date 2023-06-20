@@ -3,19 +3,16 @@ import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Autocomplete from '@mui/material/Autocomplete';
 import Container from '@mui/material/Container';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
+import { FormLabel, RadioGroup } from "@mui/material";
 
 import { getProjects } from "../../managers/ProjectManager";
-import { FormLabel, RadioGroup } from "@mui/material";
 
 
 export const NewProjectForm = () => {
@@ -96,56 +93,35 @@ export const NewProjectForm = () => {
                         </RadioGroup>
 
                     </FormControl>
+                    <FormControl fullWidth>
+                        <TextField
+                            required autoFocus
+                            type="text"
+                            className="form-control input"
+                            placeholder="Pattern URL: Where did you find this project?"
+                            value={newProjectInfo.patternURL}
+                            onChange={(evt) => {
+                                const copy = { ...newProjectInfo }
+                                copy.patternURL = evt.target.value
+                                setNewProject(copy)
+                            }} />
+                    </FormControl>
                     <FormControl>
-                        <div className="form-group field">
-                            <label className="label" htmlFor="projectURL">Pattern URL:</label>
-                            <div className="control">
-                                <input
-                                    name="patternURL"
-                                    autoFocus
-                                    type="text"
-                                    className="form-control input"
-                                    placeholder="optional"
-                                    value={newProjectInfo.patternURL}
+                                <Autocomplete
+                                    multiple
+                                    options={projects}
+                                    getOptionLabel={(project) => project.name}
+                                    renderInput={(params) => <TextField {...params} label="Project Inspiration" />}
                                     onChange={
-                                        (evt) => {
-                                            const copy = { ...newProjectInfo }
-                                            copy.patternURL = evt.target.value
+                                        (evt, value) => {
+                                            const value_list = value.map(value => value.id)
+                                            const copy = {...newProjectInfo}
+                                            copy.inspirations=value_list
                                             setNewProject(copy)
                                         }
-                                    } />
-                            </div>
-                        </div>
-                    </FormControl>
-                    <FormControl>
-                        <div className="form-group field">
-                            <label className="label" htmlFor="inspirations">Did you take inspiration from any other projects?:* </label>
-                            <div className="control">
-                                <div className="select">
-                                    <select value={newProjectInfo.inspirations} multiple={true} onChange={
-                                        (evt) => {
-                                            let newInspiration = parseInt(evt.target.value)
-                                            if (newProjectInfo.inspirations.includes(newInspiration)) {
-                                                let index = newProjectInfo.inspirations.indexOf(newInspiration)
-                                                projects.inspirations.splice(index, 1)
-                                            } else
-                                                newProjectInfo.inspirations.push(newInspiration)
-                                        }
-                                    }>
-                                        {
-                                            projects.map((project) => {
-                                                return <option value={project.id} key={project.id} > {project.name} by {project.creator_name} </option>
-                                            })
-
-                                        }
-
-                                    </select>
-
-                                </div>
-
-                            </div>
-                        </div>
-                    </FormControl>
+                                    }
+                                />
+                            </FormControl>
                     <Button type="submit" className="post-list-header" onClick={(clickEvt) => submit(clickEvt)}> Submit</Button>
                 </Stack>
             </form>

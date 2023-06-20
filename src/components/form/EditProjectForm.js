@@ -2,6 +2,16 @@ import { editProject, getCurrentProject } from "../../managers/ProjectManager";
 import { useState, useEffect } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import FormControl from '@mui/material/FormControl';
+import TextField from '@mui/material/TextField';
+import Stack from '@mui/material/Stack';
+import Autocomplete from '@mui/material/Autocomplete';
+import Container from '@mui/material/Container';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Radio from '@mui/material/Radio';
+import { FormLabel, RadioGroup } from "@mui/material";
+
 
 import { getProjects } from "../../managers/ProjectManager";
 
@@ -58,102 +68,79 @@ export const EditProjectForm = () => {
         }
     }
 
-    return <article>
-        <form>
-            <h2>Edit Project Details</h2>
-            <p className="alert">{errorMessage}</p>
-            <fieldset>
-            <label htmlFor="name">Project Name</label>
-            <input
-            required autoFocus
-            name="name"
-            type="text"
-            className="form-control input"
-            placeholder="What are you making?"
-            value={projectInfo.name}
-            onChange={(evt) => {
-                const copy = {...projectInfo}
-                copy.name = evt.target.value 
-                setProject(copy)
-            }}/>
-            </fieldset>
-            <fieldset>
-                <label>Project Description</label>
-                <textarea
-                required autoFocus
-                name="name"
-                type="text"
-                className="form-control input"
-                placeholder="Add anything you want other users to know about this project"
-                value={projectInfo.description}
-                onChange={(evt) => {
-                    const copy = {...projectInfo}
-                    copy.description = evt.target.value 
-                    setProject(copy)
-            }}/> 
-            </fieldset>
-            <fieldset>
-                <label>Would you like to hide this project from other users? Remember that notes on public projects are always private</label>
-                <div>
-                <input type="radio" checked={projectInfo.hidden} name="hidden" value="true" onChange={hidden}/> 
-                <label>yes, I would like to keep this project to myself</label>
-                </div>
-                <div>
-                <input type="radio" checked={!projectInfo.hidden} name="hidden" value="false" onChange={hidden}/> 
-                <label>no, I would like to share my work with others. </label>
-                </div>
-            </fieldset>
-            <fieldset>
-            <div className="form-group field"> 
-            <label className="label" htmlFor="projectURL">Pattern URL:</label>
-                <div className="control">
-                <input
-                name="patternURL"
-                autoFocus
-                type="text"
-                className="form-control input"
-                placeholder="optional"
-                value={projectInfo.patternURL}
-                onChange={
-                    (evt) => {
-                        const copy = {...projectInfo}
-                        copy.patternURL = evt.target.value 
-                        setProject(copy)
-                    }
-                } />
-                </div>
-            </div>
-        </fieldset>
-        <fieldset>
-                <div className="form-group field"> 
-                <label className="label"htmlFor="inspirations">Did you take inspiration from any other projects?:* </label>
-                <div className="control">
-                    <div className="select">
-                    <select value={projectInfo.inspirations} multiple={true} onChange={
-                        (evt) => {
-                            let newInspiration = parseInt(evt.target.value)
-                            if(projectInfo.inspirations.includes(newInspiration)){
-                                let index = projectInfo.inspirations.indexOf(newInspiration)
-                                projectInfo.inspirations.splice(index, 1)
-                            }else
-                            projectInfo.inspirations.push(newInspiration)
-                        }
-                    }> 
-                    {
-                    projects.map((project) => {
-                        return <option value={project.id} key={project.id} > {project.name} by {project.creator_name} </option>
-                    })
+    return <Container maxWidth="sm">
+        <Box sx={{ minWidth: 120 }} className="text-center">
+            <form>
+                <Stack spacing={2} sx={{ width: 552 }}>
+                    <h2>Start a New Project</h2>
+                    <p className="alert">{errorMessage}</p>
+                    <FormControl fullWidth>
+                        <TextField
+                            required autoFocus
+                            type="text"
+                            className="form-control input"
+                            placeholder="Project Name: What are you making?"
+                            value={projectInfo.name}
+                            onChange={(evt) => {
+                                const copy = { ...projectInfo }
+                                copy.name = evt.target.value
+                                setProject(copy)
+                            }} />
+                    </FormControl>
+                    <FormControl fullWidth>
+                        <TextField
+                            required autoFocus
+                            type="text"
+                            className="form-control input"
+                            placeholder="Project Description: Add anything you want other users to know about this project"
+                            value={projectInfo.description}
+                            onChange={(evt) => {
+                                const copy = { ...projectInfo }
+                                copy.description = evt.target.value
+                                setProject(copy)
+                            }} />
+                    </FormControl>
+                    <FormControl>
+                        <FormLabel>Would you like to hide this project from other users? Remember that notes on public projects are always private.</FormLabel>
+                        <RadioGroup>
+                            <FormControlLabel control={<Radio />} type="radio" name="hidden" value="true" onChange={hidden} label="yes, I would like to keep this project to myself"/>
+                            <FormControlLabel control={<Radio />} type="radio" name="hidden" value="false" onChange={hidden} label="no, I would like to share my work with others." />
 
-                    }
-                    
-                    </select>
-                    
-                    </div>
+                        </RadioGroup>
 
-                </div>
-                </div>
-            </fieldset>
-            <Button type="submit" className="post-list-header" onClick={(clickEvt) => submit(clickEvt)}> Submit</Button>
-        </form>
-    </article>
+                    </FormControl>
+                    <FormControl fullWidth>
+                        <TextField
+                            required autoFocus
+                            type="text"
+                            className="form-control input"
+                            placeholder="Pattern URL: Where did you find this project?"
+                            value={projectInfo.patternURL}
+                            onChange={(evt) => {
+                                const copy = { ...projectInfo }
+                                copy.patternURL = evt.target.value
+                                setProject(copy)
+                            }} />
+                    </FormControl>
+                    <FormControl>
+                                <Autocomplete
+                                    multiple
+                                    options={projects}
+                                    getOptionLabel={(project) => project.name}
+                                    renderInput={(params) => <TextField {...params} label="Project Inspiration" />}
+                                    onChange={
+                                        (evt, value) => {
+                                            const value_list = value.map(value => value.id)
+                                            const copy = {...projectInfo}
+                                            copy.inspirations=value_list
+                                            setProject(copy)
+                                        }
+                                    }
+                                />
+                            </FormControl>
+                    <Button type="submit" className="post-list-header" onClick={(clickEvt) => submit(clickEvt)}> Submit</Button>
+                </Stack>
+            </form>
+        </Box>
+    </Container>
 }

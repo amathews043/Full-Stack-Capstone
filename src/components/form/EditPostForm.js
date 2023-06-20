@@ -19,7 +19,7 @@ import Container from '@mui/material/Container';
 export const EditPostForm = ({ postId, projectId, updateProjectPosts }) => {
     const [tags, setTags] = useState([])
     const [myProjects, setMyProjects] = useState([])
-
+    const [autofillLoading, setAutofillLoading] = useState(false)
     const [postText, setPostText] = useState("")
     const [postTags, setPostTags] = useState([])
     const [postProject, setPostProject] = useState("")
