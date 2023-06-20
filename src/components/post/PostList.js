@@ -48,7 +48,7 @@ export const PostList = () => {
                                         {post.project_name} by {post.creator_name}
                                     </Button>
                                 </Typography>
-                                <Typography variant="body2" color="text.secondary">
+                                <Typography gutterBottom variant="h10" component="div">
                                     {post.post}
                                 </Typography>
                                 <Stack direction="row" spacing={2}>
