@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { getTags, getCurrentPost, editPost } from "../../managers/PostManager"
+import { getTags, getCurrentPost, editPost, autofillPost } from "../../managers/PostManager"
 import { getMyProjects } from "../../managers/ProjectManager"
 import "../post/post.css"
 import { UploadWidget } from "./UploadWidget";
@@ -118,21 +118,41 @@ export const EditPostForm = ({ postId, projectId, updateProjectPosts }) => {
                                     }
                                 />
                             </FormControl>
-                            <FormControl fullWidth>
-                                <TextField required autoFocus
-                                    multiline
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="What would you like to say about this project?"
-                                    value={postText}
-                                    onChange={
-                                        (evt => {
-                                            setPostText(evt.target.value)
-                                        })
-                                    }
-                                >
-                                </TextField>
-                            </FormControl>
+                            {
+                                autofillLoading ? "Loading..." : <div>
+                                    <Button type="button" onClick={() => {
+                                        if (postTags && postProject) {
+                                            setErrorMessage("")
+                                            const postForAutofill = {
+                                                project: postProject,
+                                                tags: postTags
+                                            }
+                                            setAutofillLoading(true)
+                                            autofillPost(postForAutofill).then((data) => {
+                                                setPostText(data.message)
+                                                setAutofillLoading(false)
+                                            })
+                                        }
+                                        else {
+                                            setErrorMessage("Please add Project and Tags to your post")
+                                        }
+                                    }}>AutoFill Post?</Button>
+                                    <FormControl fullWidth>
+                                        <TextField required autoFocus
+                                            multiline
+                                            type="text"
+                                            className="form-control input"
+                                            placeholder="What would you like to say about this project?"
+                                            value={postText}
+                                            onChange={
+                                                (evt => {
+                                                    setPostText(evt.target.value)
+                                                })
+                                            }
+                                        />
+                                    </FormControl>
+                                </div>
+                            }
 
                             <UploadWidget setImageURL={setImageURL} />
 
