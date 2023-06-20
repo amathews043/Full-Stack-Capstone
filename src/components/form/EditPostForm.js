@@ -13,6 +13,7 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Autocomplete from '@mui/material/Autocomplete';
 import Container from '@mui/material/Container';
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 
@@ -119,7 +120,7 @@ export const EditPostForm = ({ postId, projectId, updateProjectPosts }) => {
                                 />
                             </FormControl>
                             {
-                                autofillLoading ? "Loading..." : <div>
+                                autofillLoading ? <div> <CircularProgress /> </div> : <div>
                                     <Button type="button" onClick={() => {
                                         if (postTags && postProject) {
                                             setErrorMessage("")
