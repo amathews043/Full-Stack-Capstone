@@ -29,11 +29,11 @@ export const UserProfile = () => {
 
     useEffect(() => {
         getMyProfile().then(data => setUserProfile(data))
-    }, [userId])
+    }, [])
 
     useEffect(() => {
-        getUserPosts(userId).then(data => setUserPosts(data.reverse()))
-    }, [userId])
+        getUserPosts().then(data => setUserPosts(data.reverse()))
+    }, [])
 
     const setImageURL = (url) => {
         setNewProfilePic(url)

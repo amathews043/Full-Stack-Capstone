@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { getPosts } from "../../managers/PostManager.js"
+import { getOtherUserPosts } from "../../managers/PostManager.js"
 import { useNavigate } from "react-router-dom"
 import { NewPostForm } from "../form/NewPostForm.js"
 import Card from '@mui/material/Card';
@@ -15,14 +15,11 @@ import "./post.css"
 
 export const PostList = () => {
     const [posts, setPosts] = useState([])
-    const user = localStorage.getItem('user_id')
     const navigate = useNavigate()
 
     useEffect(() => {
-        getPosts().then(data => setPosts(data))
+        getOtherUserPosts().then(data => setPosts(data))
     }, [])
-
-    const filteredPosts = posts.filter(post => post.user !== parseInt(user))
 
     return (
         <Container maxWidth="sm">
@@ -30,7 +27,7 @@ export const PostList = () => {
             <h2 className="text-center"> See What Other Crafters are Making</h2>
             <Stack spacing={4}>
                 {
-                    filteredPosts.map((post) => {
+                    posts.map((post) => {
                         return <Card key={post.id} sx={{ maxWidth: 800 }}>
                             <CardContent>
                                 {
