@@ -9,13 +9,30 @@ import { useState } from "react"
 const lightTheme = createTheme({
     palette: {
         mode: 'light',
+        primary: {
+            main: '#034785',
+          },
+          background: {
+            default: '#e1e7f3',
+          },
     }
 });
 
 const darkTheme = createTheme({
     palette: {
         mode: 'dark',
-    }
+        background: {
+            default: '#121212',
+            paper: '#2f2a2a',
+            // paper: '#373232',
+          },
+          primary: {
+            main: '#034785',
+          },
+          text: {
+            primary: '#e2cece',
+          },
+      },
 });
 
 

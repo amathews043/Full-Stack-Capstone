@@ -22,7 +22,7 @@ export const ProjectList = () => {
     return (
         <Container maxWidth="sm">
             <div className="text-center margin-bottom-and-top-20px">
-            <Button onClick={() => navigate("/ProjectForm")} >Start a New Project</Button>
+            <Button variant="contained" onClick={() => navigate("/ProjectForm")} >Start a New Project</Button>
             </div>
             <Stack spacing={4}>
             {
@@ -40,7 +40,7 @@ export const ProjectList = () => {
                             }
                     
                                     <Typography gutterBottom variant="h5" component="div">
-                                    <Button onClick={() => navigate(`/projectDetails/${project.id}`)}>
+                                    <Button variant="contained" onClick={() => navigate(`/projectDetails/${project.id}`)}>
                                         {project.name}
                                     </Button>
                                 </Typography>

@@ -28,7 +28,7 @@ export const PostList = () => {
             <Stack spacing={4}>
                 {
                     posts.map((post) => {
-                        return <Card key={post.id} sx={{ maxWidth: 800 }}>
+                        return <Card key={post.id} sx={{ maxWidth: 800 }} >
                             <CardContent>
                                 {
                                     post.image ?
@@ -41,7 +41,7 @@ export const PostList = () => {
                                         <></>
                                 }
                                 <Typography gutterBottom variant="h5" component="div">
-                                    <Button onClick={() => navigate(`projectDetails/${post.project}`)}>
+                                    <Button variant="contained" onClick={() => navigate(`projectDetails/${post.project}`)}>
                                         {post.project_name} by {post.creator_name}
                                     </Button>
                                 </Typography>

@@ -23,7 +23,7 @@ export const ProfilePictureUploadWidget = ({setImageURL}) => {
 
     return <CloudinaryContext cloudName='duy4yg4hz'>
     <div>
-        <Button type="button" id="addPicture" className="button is-link post-list-header" onClick={() => widgetRef.current.open()}>
+        <Button variant="contained" type="button" id="addPicture" className="button is-link post-list-header" onClick={() => widgetRef.current.open()}>
         Upload a Profile Picture
         </Button>
     </div>

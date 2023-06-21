@@ -10,7 +10,8 @@ import Autocomplete from '@mui/material/Autocomplete';
 import Container from '@mui/material/Container';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
-import { FormLabel, RadioGroup } from "@mui/material";
+import { CardContent, FormLabel, RadioGroup } from "@mui/material";
+import Card from '@mui/material/Card';
 
 
 import { getProjects } from "../../managers/ProjectManager";
@@ -72,7 +73,7 @@ export const EditProjectForm = () => {
         <Box sx={{ minWidth: 120 }} className="text-center">
             <form>
                 <Stack spacing={2} sx={{ width: 552 }}>
-                    <h2>Start a New Project</h2>
+                    <h2>Edit Project Info</h2>
                     <p className="alert">{errorMessage}</p>
                     <FormControl fullWidth>
                         <TextField
@@ -101,7 +102,7 @@ export const EditProjectForm = () => {
                             }} />
                     </FormControl>
                     <FormControl>
-                        <FormLabel>Would you like to hide this project from other users? Remember that notes on public projects are always private.</FormLabel>
+                        <Card> <CardContent> Would you like to hide this project from other users? Remember that notes on public projects are always private. </CardContent> </Card>
                         <RadioGroup>
                             <FormControlLabel control={<Radio />} type="radio" name="hidden" value="true" onChange={hidden} label="yes, I would like to keep this project to myself"/>
                             <FormControlLabel control={<Radio />} type="radio" name="hidden" value="false" onChange={hidden} label="no, I would like to share my work with others." />
@@ -115,10 +116,10 @@ export const EditProjectForm = () => {
                             type="text"
                             className="form-control input"
                             placeholder="Pattern URL: Where did you find this project?"
-                            value={projectInfo.patternURL}
+                            value={projectInfo.pattern_url}
                             onChange={(evt) => {
                                 const copy = { ...projectInfo }
-                                copy.patternURL = evt.target.value
+                                copy.pattern_url = evt.target.value
                                 setProject(copy)
                             }} />
                     </FormControl>
@@ -138,7 +139,9 @@ export const EditProjectForm = () => {
                                     }
                                 />
                             </FormControl>
-                    <Button type="submit" className="post-list-header" onClick={(clickEvt) => submit(clickEvt)}> Submit</Button>
+                            <div className="margin-bottom-and-top-20px"> 
+                    <Button variant="contained" type="submit" className="post-list-header" onClick={(clickEvt) => submit(clickEvt)}> Submit</Button>
+                </div>
                 </Stack>
             </form>
         </Box>

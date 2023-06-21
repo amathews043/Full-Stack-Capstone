@@ -64,12 +64,14 @@ export const NewPostForm = () => {
 
     return (
         <Box sx={{ minWidth: 120 }} className="text-center">
-            <Button type="button" onClick={() => { setForm(!formShown) }}> Create a New Post</Button>
+            <div className="margin-bottom-and-top-20px">
+                <Button variant="contained" type="button" onClick={() => { setForm(!formShown) }}> Create a New Post</Button>
+            </div>
             {
                 formShown ?
                     <form onSubmit={submit}>
                         <p className="alert">{errorMessage}</p>
-                        <Stack spacing={2} sx={{ width: 552 }}>
+                        <Stack spacing={2} sx={{ maxWidth: 552 }}>
                             <FormControl fullWidth>
                                 <InputLabel>Please Choose a Project:*</InputLabel>
                                 <Select value={postProject} label="Please Choose a Project"
@@ -102,8 +104,8 @@ export const NewPostForm = () => {
                                 />
                             </FormControl>
                             {
-                                autofillLoading ? <div> <CircularProgress /> </div>: <div>
-                                    <Button type="button" onClick={() => {
+                                autofillLoading ? <div> <CircularProgress /> </div> : <div>
+                                    <Button variant="contained" type="button" onClick={() => {
                                         if (postTags && postProject) {
                                             setErrorMessage("")
                                             const postForAutofill = {
@@ -136,11 +138,12 @@ export const NewPostForm = () => {
                                     </FormControl>
                                 </div>
                             }
+
+                            <UploadWidget setImageURL={setImageURL} />
                         </Stack>
-
-                        <UploadWidget setImageURL={setImageURL} />
-
-                        <Button type="submit" className="post-list-header"> Submit</Button>
+                        <div className="margin-bottom-and-top-20px">
+                            <Button variant="contained" type="submit" > Submit</Button>
+                        </div>
                     </form>
                     :
                     ""

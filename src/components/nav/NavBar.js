@@ -5,6 +5,8 @@ import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
 import "./navbar.css"
 import Switch from '@mui/material/Switch';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
 
 export const NavBar = ({toggleTheme, toggle}) => {
     const navigate = useNavigate()
@@ -31,7 +33,7 @@ export const NavBar = ({toggleTheme, toggle}) => {
                     <Button color="inherit" onClick={() => navigate("/projectList")}>Projects</Button>
                     <Button color="inherit" onClick={() => navigate("/myProfile")}>Profile</Button>
                     </div>
-                    <div> { toggle ? "Dark Mode" : "Light Mode"
+                    <div> { toggle ? <DarkModeIcon/> : <LightModeIcon />
                         
                         }
                     <Switch onClick={toggleTheme} />

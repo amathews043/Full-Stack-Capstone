@@ -21,7 +21,7 @@ export const NewProjectForm = () => {
     const [errorMessage, setErrorMessage] = useState("")
     const [newProjectInfo, setNewProject] = useState({
         name: "",
-        patternURL: "",
+        pattern_url: "",
         hidden: false,
         description: "",
         inspirations: []
@@ -99,10 +99,10 @@ export const NewProjectForm = () => {
                             type="text"
                             className="form-control input"
                             placeholder="Pattern URL: Where did you find this project?"
-                            value={newProjectInfo.patternURL}
+                            value={newProjectInfo.pattern_url}
                             onChange={(evt) => {
                                 const copy = { ...newProjectInfo }
-                                copy.patternURL = evt.target.value
+                                copy.pattern_url = evt.target.value
                                 setNewProject(copy)
                             }} />
                     </FormControl>

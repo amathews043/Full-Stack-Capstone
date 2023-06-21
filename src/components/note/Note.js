@@ -28,7 +28,7 @@ export const Note = ({projectId, updateProjectNotes}) => {
     }
     return<Container maxWidth="sm">
         <Box sx={{ minWidth: 120 }} className="text-center">
-        <Button onClick={() => {setShowForm(!showForm)}} className="newNoteHeader">Add a New Note</Button>
+        <Button variant="contained" onClick={() => {setShowForm(!showForm)}} className="newNoteHeader">Add a New Note</Button>
         <p className="alert">{errorMessage}</p>
         {
             showForm ? <form onSubmit={submitButton}>
@@ -39,7 +39,7 @@ export const Note = ({projectId, updateProjectNotes}) => {
                         setNewNote(copy)
                     }}/> 
                 </FormControl>
-                <Button type="submit" >Submit </Button>
+                <Button variant="contained" type="submit" >Submit </Button>
             </form> : ""
         }
         </Box>

@@ -10,6 +10,12 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
 import Box from '@mui/material/Box';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
 
 import { getCurrentProject, getProjectNotes, deleteProjectNote, deleteProject } from "../../managers/ProjectManager";
 import { getProjectPosts, deletePost } from "../../managers/PostManager";
@@ -24,6 +30,7 @@ export const ProjectDetails = () => {
     const [notes, setNotes] = useState([])
     const [posts, setPosts] = useState([])
     const user = parseInt(localStorage.getItem('user_id'))
+    const [open, setOpen] = useState(false);
 
     useEffect(() => {
         getCurrentProject(project_id).then((data) => {
@@ -55,14 +62,23 @@ export const ProjectDetails = () => {
         });
     };
 
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
     return <Container maxWidth="sm">
         <Box className="text-center">
             <h2 className="text-center">{project.name} by {project.creator_name}</h2>
             <p>{project.description}</p>
-            {project.pattern_url ? <Button className="button is-link" type="button"><Link to={project.pattern_url} className="link" target="_blank" rel="noreferrer noopener" > Link to Pattern </Link></Button> : ""}
+            {project.pattern_url ? <Button sx={{ bgcolor: "#94a6c7" }} variant="contained" className="button is-link" type="button">
+                <Link to={project.pattern_url} className="link" target="_blank" rel="noreferrer noopener" > Link to Pattern </Link></Button> : ""}
             <Stack spacing={4}>
                 {
-                    project.user_id === user ? <Button onClick={() => navigate(`/editProject/${project.id}`)}>Edit Project</Button>
+                    project.user_id === user ? <div className="margin-bottom-and-top-20px"> <Button variant="contained" onClick={() => navigate(`/editProject/${project.id}`)}>Edit Project</Button> </div>
                         : ""
                 }
                 <h4 className="text-center">This Project Was Inspired By:</h4>
@@ -70,7 +86,8 @@ export const ProjectDetails = () => {
 
                 {
                     project.inspirations?.map((inspiration) => {
-                        return <Link className="text-center" to={`/projectDetails/${inspiration.id}`} key={inspiration.id} ><li> {inspiration.name} </li> </Link>
+                        return <div className="margin-bottom-and-top-20px"> <Button variant="contained" className="text-center" onClick={() => navigate(`/projectDetails/${inspiration.id}`)} key={inspiration.id} > {inspiration.name} </Button>
+                        </div>
                     })
                 }
                 <Stack spacing={10}>
@@ -98,9 +115,9 @@ export const ProjectDetails = () => {
                                         post.user === user ? <div>
                                             <EditPostForm postId={post.id} projectId={post.project} updateProjectPosts={updateProjectPosts} />
                                             <Typography >
-                                                <Popup trigger={<Button > Delete Post</Button>} position={"right center"}>
+                                                <Popup trigger={<Button variant="contained"> Delete Post</Button>} position={"right center"}>
                                                     <div> Are you sure you want to delete me?  <div>
-                                                        <Button onClick={() => deletePost(post.id)
+                                                        <Button variant="contained" onClick={() => deletePost(post.id)
                                                             .then(() => getProjectPosts(project.id).then(data => setPosts(data)))}>Delete</Button></div> </div>
                                                 </Popup>
                                             </Typography>
@@ -130,16 +147,16 @@ export const ProjectDetails = () => {
                                 notes?.map((note) => {
                                     return <Card key={note.id} sx={{ maxWidth: 800 }}>
                                         <CardContent>
-                                        <Typography gutterBottom variant="h10" component="div">
-                                            <p className="card-text">{note.note}</p>
-                                        </Typography>
-                                            <div><Button onClick={() => {
+                                            <Typography gutterBottom variant="h10" component="div">
+                                                <p className="card-text">{note.note}</p>
+                                            </Typography>
+                                            <div><Button variant="contained" onClick={() => {
                                                 navigate(`/editNote/${note.id}`)
                                             }}
                                             > Edit Note </Button>
-                                                <Popup trigger={<Button> Delete Note</Button>} position={"right center"}>
+                                                <Popup trigger={<Button variant="contained"> Delete Note</Button>} position={"right center"}>
                                                     <div> Are you sure you want to delete me? This cannot be undone <div>
-                                                        <Button onClick={() => deleteProjectNote(note.id)
+                                                        <Button variant="contained" onClick={() => deleteProjectNote(note.id)
                                                             .then(() => getProjectNotes(project.id).then(data => setNotes(data)))}>Delete</Button></div> </div>
                                                 </Popup>
                                             </div>
@@ -148,14 +165,31 @@ export const ProjectDetails = () => {
                                 })
                             }
                         </Stack>
-                        <Popup trigger={<Button> Delete Project</Button>} position={"right center"}>
-                            <div> Are you sure you want to delete me? This cannot be undone. Remember you can edit the project details (including visibility) with the button on the top of the page
-                                <div>
-                                    <Button onClick={() => deleteProject(project_id)
-                                        .then(() => navigate("/projectList"))}>Delete</Button>
-                                </div>
-                            </div>
-                        </Popup>
+                        <Button variant="contained" onClick={handleClickOpen}>
+                            Delete Project
+                        </Button>
+                        <Dialog
+                            open={open}
+                            onClose={handleClose}
+                            aria-labelledby="alert-dialog-title"
+                            aria-describedby="alert-dialog-description">
+                            <DialogTitle id="alert-dialog-title">
+                                {"Delete Project?"}
+                            </DialogTitle>
+                            <DialogContent>
+                                <DialogContentText id="alert-dialog-description">
+                                Are you sure you want to delete me? This cannot be undone. Remember you can edit the project details 
+                                (including visibility) with the button on the top of the page
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button variant="contained" onClick={() => deleteProject(project_id)
+                                        .then(() => navigate("/projectList"))}>Delete Project</Button>
+                                <Button variant="contained" onClick={handleClose} autoFocus>
+                                    Cancel
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
                     </div>
                         : ""
                 }

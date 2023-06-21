@@ -56,8 +56,8 @@ export const UserProfile = () => {
     return <article className="center">
         <Box sx={{ minWidth: 120 }} className="text-center">
             <h2>My Profile </h2>
-            <div>
-                <Button onClick={() => setForm(!formShown)}> Edit Profile</Button>
+            <div className="margin-bottom-and-top-20px">
+                <Button variant="contained" onClick={() => setForm(!formShown)}> Edit Profile</Button>
             </div>
             {
                 formShown ?
@@ -76,8 +76,12 @@ export const UserProfile = () => {
                                 />
                             </div>
                         </FormControl>
-                        <ProfilePictureUploadWidget setImageURL={setImageURL} />
-                        <Button type="submit">Submit Changes</Button>
+                        <div className="margin-bottom-and-top-20px">
+                            <ProfilePictureUploadWidget setImageURL={setImageURL} />
+                        </div>
+                        <div className="margin-bottom-and-top-20px">
+                            <Button variant="contained" type="submit">Submit Changes</Button>
+                        </div>
                     </form>
 
                     : ""
@@ -100,18 +104,19 @@ export const UserProfile = () => {
                                         />
 
 
-
-                                        <Popup trigger={<Button>Delete Profile Picture</Button>} position={"right center"}>
-                                            <div>Are you sure you want to delete your profile picture?
-                                                <div>
-                                                    <Button onClick={() => {
-                                                        const copy = { ...userProfile }
-                                                        copy.profile_pic = ""
-                                                        updateProfile(copy).then(() => getMyProfile(userId).then(data => setUserProfile(data)))
-                                                    }}>Delete</Button>
+                                        <div className="margin-bottom-and-top-20px">
+                                            <Popup trigger={<Button variant="contained">Delete Profile Picture</Button>} position={"right center"}>
+                                                <div>Are you sure you want to delete your profile picture?
+                                                    <div>
+                                                        <Button variant="contained" onClick={() => {
+                                                            const copy = { ...userProfile }
+                                                            copy.profile_pic = ""
+                                                            updateProfile(copy).then(() => getMyProfile(userId).then(data => setUserProfile(data)))
+                                                        }}>Delete</Button>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </Popup>
+                                            </Popup>
+                                        </div>
                                     </CardContent>
                                 </Card>
 
@@ -143,13 +148,15 @@ export const UserProfile = () => {
                                         <></>
                                 }
                                 <Typography gutterBottom variant="h5" component="div">
-                                    <Button onClick={() => navigate(`projectDetails/${post.project}`)}>
+                                    <Button variant="contained" onClick={() => navigate(`projectDetails/${post.project}`)}>
                                         {post.project_name} by {post.creator_name}
                                     </Button>
                                 </Typography>
-                                <Typography variant="body2" color="text.secondary">
-                                    {post.post}
-                                </Typography>
+                                <div className="margin-bottom-and-top-20px">
+                                    <Typography variant="body2" color="text.secondary">
+                                        {post.post}
+                                    </Typography>
+                                </div>
                                 <Stack direction="row" spacing={2}>
                                     {
                                         post.tags.map((tag) => {
