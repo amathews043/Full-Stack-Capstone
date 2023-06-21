@@ -29,6 +29,7 @@ const darkTheme = createTheme({
           primary: {
             main: '#034785',
           },
+          
           text: {
             primary: '#e2cece',
           },

@@ -30,7 +30,8 @@ export const ProjectDetails = () => {
     const [notes, setNotes] = useState([])
     const [posts, setPosts] = useState([])
     const user = parseInt(localStorage.getItem('user_id'))
-    const [open, setOpen] = useState(false);
+    const [openDeleteProjectPopup, setOpenDeleteProjectPopup] = useState(false);
+    const [openDeleteNotePopup, setOpenDeleteNotePopup] = useState(false)
 
     useEffect(() => {
         getCurrentProject(project_id).then((data) => {
@@ -62,13 +63,27 @@ export const ProjectDetails = () => {
         });
     };
 
-    const handleClickOpen = () => {
-        setOpen(true);
+    const handleClickOpenDeleteProjectPopup = () => {
+        setOpenDeleteProjectPopup(true);
     };
 
-    const handleClose = () => {
-        setOpen(false);
+    const handleCloseDeleteProjectPopup = () => {
+        setOpenDeleteProjectPopup(false);
     };
+
+    const handleClickOpenDeleteNotePopup = () => {
+        setOpenDeleteNotePopup(true);
+    };
+
+    const handleCloseDeleteNotePopup = () => {
+        setOpenDeleteNotePopup(false);
+    };
+
+    const deleteNote = (noteId) => {
+        deleteProjectNote(noteId)
+            .then(() => getProjectNotes(project.id).then(data => setNotes(data)))
+        handleCloseDeleteNotePopup()
+    }
 
     return <Container maxWidth="sm">
         <Box className="text-center">
@@ -116,7 +131,7 @@ export const ProjectDetails = () => {
                                             <EditPostForm postId={post.id} projectId={post.project} updateProjectPosts={updateProjectPosts} />
                                             <Typography >
                                                 <Popup trigger={<Button variant="contained"> Delete Post</Button>} position={"right center"}>
-                                                    <div> Are you sure you want to delete me?  <div>
+                                                    <div > Are you sure you want to delete me?  <div>
                                                         <Button variant="contained" onClick={() => deletePost(post.id)
                                                             .then(() => getProjectPosts(project.id).then(data => setPosts(data)))}>Delete</Button></div> </div>
                                                 </Popup>
@@ -150,27 +165,53 @@ export const ProjectDetails = () => {
                                             <Typography gutterBottom variant="h10" component="div">
                                                 <p className="card-text">{note.note}</p>
                                             </Typography>
-                                            <div><Button variant="contained" onClick={() => {
+                                            <div className="text-center">
+                                            <Box>
+                                            <Stack direction="row" spacing={2} justifyContent='center'>
+                                                <Button variant="contained" onClick={() => {
                                                 navigate(`/editNote/${note.id}`)
                                             }}
                                             > Edit Note </Button>
-                                                <Popup trigger={<Button variant="contained"> Delete Note</Button>} position={"right center"}>
-                                                    <div> Are you sure you want to delete me? This cannot be undone <div>
-                                                        <Button variant="contained" onClick={() => deleteProjectNote(note.id)
-                                                            .then(() => getProjectNotes(project.id).then(data => setNotes(data)))}>Delete</Button></div> </div>
-                                                </Popup>
+                                                <Button variant="contained" onClick={handleClickOpenDeleteNotePopup}>
+                                                    Delete Note
+                                                </Button>
+                                                </Stack>
+                                                </Box>
+                                                <Dialog
+                                                    open={openDeleteNotePopup}
+                                                    onClose={handleCloseDeleteNotePopup}
+                                                    aria-labelledby="alert-dialog-title"
+                                                    aria-describedby="alert-dialog-description">
+                                                    <DialogTitle id="alert-dialog-title">
+                                                        {"Delete Note?"}
+                                                    </DialogTitle>
+                                                    <DialogContent>
+                                                        <DialogContentText id="alert-dialog-description">
+                                                            Are you sure you want to delete me? This cannot be undone.
+                                                        </DialogContentText>
+                                                    </DialogContent>
+                                                    <DialogActions>
+                                                        <Button variant="contained" onClick={() => deleteNote(note.id)}>Delete Note</Button>
+                                                        <Button variant="contained" onClick={handleCloseDeleteNotePopup} autoFocus>
+                                                            Cancel
+                                                        </Button>
+                                                    </DialogActions>
+                                                </Dialog>
+
                                             </div>
                                         </CardContent>
                                     </Card>
                                 })
                             }
                         </Stack>
-                        <Button variant="contained" onClick={handleClickOpen}>
-                            Delete Project
-                        </Button>
+                        <div className="margin-bottom-and-top-20px">
+                            <Button variant="contained" onClick={handleClickOpenDeleteProjectPopup}>
+                                Delete Project
+                            </Button>
+                        </div>
                         <Dialog
-                            open={open}
-                            onClose={handleClose}
+                            open={openDeleteProjectPopup}
+                            onClose={handleCloseDeleteProjectPopup}
                             aria-labelledby="alert-dialog-title"
                             aria-describedby="alert-dialog-description">
                             <DialogTitle id="alert-dialog-title">
@@ -178,14 +219,14 @@ export const ProjectDetails = () => {
                             </DialogTitle>
                             <DialogContent>
                                 <DialogContentText id="alert-dialog-description">
-                                Are you sure you want to delete me? This cannot be undone. Remember you can edit the project details 
-                                (including visibility) with the button on the top of the page
+                                    Are you sure you want to delete me? This cannot be undone. Remember you can edit the project details
+                                    (including visibility) with the button on the top of the page
                                 </DialogContentText>
                             </DialogContent>
                             <DialogActions>
                                 <Button variant="contained" onClick={() => deleteProject(project_id)
-                                        .then(() => navigate("/projectList"))}>Delete Project</Button>
-                                <Button variant="contained" onClick={handleClose} autoFocus>
+                                    .then(() => navigate("/projectList"))}>Delete Project</Button>
+                                <Button variant="contained" onClick={handleCloseDeleteProjectPopup} autoFocus>
                                     Cancel
                                 </Button>
                             </DialogActions>

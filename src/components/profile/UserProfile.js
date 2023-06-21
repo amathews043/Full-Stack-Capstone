@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import Container from '@mui/material/Container';
 import { useNavigate } from "react-router-dom"
-import Popup from 'reactjs-popup';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Unstable_Grid2';
 import Button from '@mui/material/Button';
@@ -13,12 +12,18 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import FormControl from '@mui/material/FormControl';
 import { TextField } from "@mui/material";
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 import { getMyProfile, updateProfile } from "../../managers/ProfileManager";
 import { getUserPosts } from "../../managers/PostManager";
 import { ProfilePictureUploadWidget } from "./ProfilePictureUploadWidget";
 
 export const UserProfile = () => {
+    const [open, setOpen] = useState(false);
     const navigate = useNavigate()
     const [userProfile, setUserProfile] = useState({})
     const [userPosts, setUserPosts] = useState([])
@@ -52,6 +57,13 @@ export const UserProfile = () => {
 
         updateProfile(updatedProfile)
     }
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     return <article className="center">
         <Box sx={{ minWidth: 120 }} className="text-center">
@@ -105,17 +117,33 @@ export const UserProfile = () => {
 
 
                                         <div className="margin-bottom-and-top-20px">
-                                            <Popup trigger={<Button variant="contained">Delete Profile Picture</Button>} position={"right center"}>
-                                                <div>Are you sure you want to delete your profile picture?
-                                                    <div>
-                                                        <Button variant="contained" onClick={() => {
-                                                            const copy = { ...userProfile }
-                                                            copy.profile_pic = ""
-                                                            updateProfile(copy).then(() => getMyProfile(userId).then(data => setUserProfile(data)))
-                                                        }}>Delete</Button>
-                                                    </div>
-                                                </div>
-                                            </Popup>
+                                            <Button variant="contained" onClick={handleClickOpen}>
+                                                Delete Profile Picture
+                                            </Button>
+                                            <Dialog
+                                                open={open}
+                                                onClose={handleClose}
+                                                aria-labelledby="alert-dialog-title"
+                                                aria-describedby="alert-dialog-description">
+                                                <DialogTitle id="alert-dialog-title">
+                                                    {"Delete Profile Picture?"}
+                                                </DialogTitle>
+                                                <DialogContent>
+                                                    <DialogContentText id="alert-dialog-description">
+                                                        Are you sure you want to delete your profile picture? This cannot be undone but you can update your profile picture by clicking edit profile above.
+                                                    </DialogContentText>
+                                                </DialogContent>
+                                                <DialogActions>
+                                                    <Button variant="contained" onClick={() => {
+                                                        const copy = { ...userProfile }
+                                                        copy.profile_pic = ""
+                                                        updateProfile(copy).then(() => getMyProfile(userId).then(data => setUserProfile(data)))
+                                                    }}>Delete Profile Picture</Button>
+                                                    <Button variant="contained" onClick={handleClose} autoFocus>
+                                                        Cancel
+                                                    </Button>
+                                                </DialogActions>
+                                            </Dialog>
                                         </div>
                                     </CardContent>
                                 </Card>
