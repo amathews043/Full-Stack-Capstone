@@ -7,6 +7,7 @@ import { ThemeProvider } from "@mui/material"
 import { createTheme } from "@mui/material"
 import CssBaseline from '@mui/material/CssBaseline';
 
+
 const theme = createTheme({
     palette: {
         mode: 'dark',
@@ -17,10 +18,9 @@ const theme = createTheme({
 const container = document.getElementById("root")
 const root = createRoot(container)
 root.render(
-    <ThemeProvider theme={theme}>
-         <CssBaseline />
-    <BrowserRouter>
-        <Craft />
-    </BrowserRouter>
-    </ThemeProvider>
+
+        <BrowserRouter>
+            <Craft />
+        </BrowserRouter>
+
 )

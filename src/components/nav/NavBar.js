@@ -1,12 +1,12 @@
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import "./navbar.css"
+import Switch from '@mui/material/Switch';
 
-export const NavBar = () => {
+export const NavBar = ({toggleTheme, toggle}) => {
     const navigate = useNavigate()
 
     return (
@@ -30,6 +30,11 @@ export const NavBar = () => {
                     <Button color="inherit" onClick={() => navigate("/")}>Home</Button>
                     <Button color="inherit" onClick={() => navigate("/projectList")}>Projects</Button>
                     <Button color="inherit" onClick={() => navigate("/myProfile")}>Profile</Button>
+                    </div>
+                    <div> { toggle ? "Dark Mode" : "Light Mode"
+                        
+                        }
+                    <Switch onClick={toggleTheme} />
                     </div>
                     <Button color="inherit" onClick={() => {
                         localStorage.removeItem("token")
