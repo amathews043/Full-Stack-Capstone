@@ -90,23 +90,30 @@ export const UserProfile = () => {
                     <Grid xs={6}>
 
                         {
-                            userProfile.profile_pic ? <div className=" p-3 mx-auto p-2 shadow p-3 mb-5 bg-body-tertiary rounded "> <img src={userProfile.profile_pic} alt={userProfile.username} />
+                            userProfile.profile_pic ?
+                                <Card sx={{ maxWidth: 500 }}>
+                                    <CardContent>
+                                        <CardMedia
+                                            sx={{ height: 700 }}
+                                            image={userProfile.profile_pic}
+                                            title={userProfile.username}
+                                        />
 
-                                <div className="card-body">
 
-                                    <Popup trigger={<Button>Delete Profile Picture</Button>} position={"right center"}>
-                                        <div>Are you sure you want to delete your profile picture?
-                                            <div>
-                                                <Button onClick={() => {
-                                                    const copy = { ...userProfile }
-                                                    copy.profile_pic = ""
-                                                    updateProfile(copy).then(() => getMyProfile(userId).then(data => setUserProfile(data)))
-                                                }}>Delete</Button>
+
+                                        <Popup trigger={<Button>Delete Profile Picture</Button>} position={"right center"}>
+                                            <div>Are you sure you want to delete your profile picture?
+                                                <div>
+                                                    <Button onClick={() => {
+                                                        const copy = { ...userProfile }
+                                                        copy.profile_pic = ""
+                                                        updateProfile(copy).then(() => getMyProfile(userId).then(data => setUserProfile(data)))
+                                                    }}>Delete</Button>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </Popup>
-                                </div>
-                            </div>
+                                        </Popup>
+                                    </CardContent>
+                                </Card>
 
                                 : ""
                         }

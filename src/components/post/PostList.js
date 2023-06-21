@@ -18,7 +18,7 @@ export const PostList = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        getOtherUserPosts().then(data => setPosts(data))
+        getOtherUserPosts().then(data => setPosts(data.reverse()))
     }, [])
 
     return (
