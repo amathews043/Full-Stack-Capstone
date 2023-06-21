@@ -1,5 +1,5 @@
-export const getMyProfile = (user_id) => {
-    return fetch(`http://localhost:8000/profiles/${user_id}`, {
+export const getMyProfile = () => {
+    return fetch(`http://localhost:8000/profiles/current_user_profile`, {
         headers:{
             "Authorization": `Token ${localStorage.getItem("token")}`
         }

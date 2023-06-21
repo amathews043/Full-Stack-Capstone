@@ -28,7 +28,7 @@ export const UserProfile = () => {
     const [newUserBio, setNewUserBio] = useState("")
 
     useEffect(() => {
-        getMyProfile(userId).then(data => setUserProfile(data))
+        getMyProfile().then(data => setUserProfile(data))
     }, [userId])
 
     useEffect(() => {
