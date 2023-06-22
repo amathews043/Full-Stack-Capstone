@@ -23,6 +23,7 @@ export const PostList = () => {
 
     return (
         <article>
+            <h1 className="text-center">Handmade Hangout</h1>
             <NewPostForm />
             <Container maxWidth="md">
             <h2 className="text-center"> See What Other Crafters are Making</h2>
