@@ -22,18 +22,19 @@ export const PostList = () => {
     }, [])
 
     return (
-        <Container maxWidth="sm">
+        <article>
             <NewPostForm />
+            <Container maxWidth="md">
             <h2 className="text-center"> See What Other Crafters are Making</h2>
             <Stack spacing={4}>
                 {
                     posts.map((post) => {
-                        return <Card key={post.id} sx={{ maxWidth: 800 }} >
+                        return <Card key={post.id} sx={{ maxWidth: 1000 }} >
                             <CardContent>
                                 {
                                     post.image ?
                                         <CardMedia
-                                            sx={{ height: 300 }}
+                                            sx={{ height: 500 }}
                                             image={post.image}
                                             title={post.project_name}
                                         />
@@ -62,5 +63,6 @@ export const PostList = () => {
                 }
             </Stack>
         </Container>
+        </article>
     )
 }
