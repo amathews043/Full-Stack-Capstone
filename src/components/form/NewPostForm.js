@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { getTags } from "../../managers/PostManager"
+import { getTags, getSinglePost } from "../../managers/PostManager"
 import { getMyProjects } from "../../managers/ProjectManager"
 import { newPost, autofillPost } from "../../managers/PostManager"
 import "../post/post.css"
@@ -14,10 +14,19 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import { useNavigate } from "react-router-dom"
+import Typography from '@mui/material/Typography';
+import Chip from '@mui/material/Chip';
+import Container from '@mui/material/Container';
+
 
 export const NewPostForm = () => {
     const [tags, setTags] = useState([])
     const [myProjects, setMyProjects] = useState([])
+    const navigate = useNavigate()
 
     const [postText, setPostText] = useState("")
     const [postTags, setPostTags] = useState([])
@@ -25,6 +34,9 @@ export const NewPostForm = () => {
     const [postImage, setPostImage] = useState("")
     const [errorMessage, setErrorMessage] = useState("")
     const [autofillLoading, setAutofillLoading] = useState(false)
+    const [newPostSaved, setNewPostSaved] = useState(false)
+    const [savedPost, setSavedPost] = useState({})
+    
 
     const [formShown, setForm] = useState(false)
 
@@ -44,8 +56,14 @@ export const NewPostForm = () => {
         if (!post.post || post.tags === [] || !post.project) {
             setErrorMessage("Please Complete All Required Fields")
         } else {
-            newPost(post)
-            setForm(!formShown)
+            newPost(post).then((data) => {
+                getSinglePost(data.id)
+                    .then((data) => {
+                        setSavedPost(data)
+                        setForm(!formShown)
+                        setNewPostSaved(true)
+                    })
+            })
             setPostText("")
             setPostTags([])
             setPostProject("")
@@ -62,11 +80,50 @@ export const NewPostForm = () => {
     }
 
 
-    return (
-        <Box sx={{ minWidth: 120 }} className="text-center">
+    return (<Container maxWidth="sm">
+        <Box className="text-center">
             <div className="margin-bottom-and-top-20px">
                 <Button variant="contained" type="button" onClick={() => { setForm(!formShown) }}> Create a New Post</Button>
             </div>
+            </Box>
+            {
+                newPostSaved && !formShown ? <Box sx={{ maxWidth: 800 }}> 
+                <h2 className="text-center"> Your New Post</h2>
+                <Stack spacing={4}>
+                <Card key={savedPost.id} sx={{ maxWidth: 800 }} >
+                <CardContent>
+                    {
+                        savedPost.image ?
+                            <CardMedia
+                                sx={{ height: 800 }}
+                                image={savedPost.image}
+                                title={savedPost.project_name}
+                            />
+                            :
+                            <></>
+                    }
+                    <Typography gutterBottom variant="h5" component="div">
+                        <Button variant="contained" onClick={() => navigate(`projectDetails/${savedPost.project}`)}>
+                            {savedPost.project_name} by {savedPost.creator_name}
+                        </Button>
+                    </Typography>
+                    <Typography gutterBottom variant="h10" component="div">
+                        {savedPost.post}
+                    </Typography>
+                    <Stack direction="row" spacing={2}>
+                        {
+                            savedPost?.tags?.map((tag) => {
+                                return <Chip label={tag.tag} size="small" key={tag.id} />
+                            })
+                        }
+                    </Stack>
+                </CardContent>
+            </Card> 
+            </Stack>
+            </Box>
+            : ""
+            }
+            <Box className="text-center">
             {
                 formShown ?
                     <form onSubmit={submit}>
@@ -149,6 +206,7 @@ export const NewPostForm = () => {
                     ""
             }
         </Box>
+        </Container>
     );
 
 }

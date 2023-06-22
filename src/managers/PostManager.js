@@ -1,5 +1,5 @@
-export const getPosts = () => {
-    return fetch("http://localhost:8000/posts", {
+export const getSinglePost = (postId) => {
+    return fetch(`http://localhost:8000/posts/${postId}`, {
         headers:{
             "Authorization": `Token ${localStorage.getItem("token")}`
         }
@@ -25,6 +25,7 @@ export const newPost = (post) => {
         }, 
         body: JSON.stringify(post)
     })
+    .then(response => response.json())
 }
 
 export const autofillPost = (post) => {

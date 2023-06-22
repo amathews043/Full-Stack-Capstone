@@ -127,7 +127,7 @@ export const ProjectDetails = () => {
                                     {
                                         post.image ?
                                             <CardMedia
-                                                sx={{ height: 300 }}
+                                                sx={{ height: 800 }}
                                                 image={post.image}
                                                 title={post.project_name}
                                             />

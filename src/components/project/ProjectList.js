@@ -32,7 +32,7 @@ export const ProjectList = () => {
                             {
                                 project.preview_image ? 
                                 <CardMedia
-                                sx={{ height: 300 }}
+                                sx={{ height: 800 }}
                                 image={project.preview_image}
                                 title={project.name}
                             />

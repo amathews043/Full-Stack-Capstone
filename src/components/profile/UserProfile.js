@@ -27,7 +27,6 @@ export const UserProfile = () => {
     const navigate = useNavigate()
     const [userProfile, setUserProfile] = useState({})
     const [userPosts, setUserPosts] = useState([])
-    const userId = parseInt(localStorage.getItem('user_id'))
     const [formShown, setForm] = useState(false)
     const [newProfilePic, setNewProfilePic] = useState("")
     const [newUserBio, setNewUserBio] = useState("")
@@ -137,7 +136,7 @@ export const UserProfile = () => {
                                                     <Button variant="contained" onClick={() => {
                                                         const copy = { ...userProfile }
                                                         copy.profile_pic = ""
-                                                        updateProfile(copy).then(() => getMyProfile(userId).then(data => setUserProfile(data)))
+                                                        updateProfile(copy).then(() => getMyProfile().then(data => setUserProfile(data)))
                                                     }}>Delete Profile Picture</Button>
                                                     <Button variant="contained" onClick={handleClose} autoFocus>
                                                         Cancel
