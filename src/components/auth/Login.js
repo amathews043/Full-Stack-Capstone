@@ -1,6 +1,12 @@
 import React, { useRef } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { loginUser } from "../../managers/AuthManager"
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+import FormControl from '@mui/material/FormControl';
+import { TextField } from "@mui/material";
+import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
 
 
 export const Login = () => {
@@ -29,33 +35,35 @@ export const Login = () => {
     }
 
     return (
-        <main className="container--login">
+        <Container maxWidth="sm">
             <dialog className="dialog dialog--auth" ref={invalidDialog}>
                 <div>Username or password was not valid.</div>
-                <button className="button--close" onClick={e => invalidDialog.current.close()}>Close</button>
+                <Button className="button--close" onClick={e => invalidDialog.current.close()}>Close</Button>
             </dialog>
-            <section>
+            <Box>
                 <form className="form--login" onSubmit={handleLogin}>
                     <h1>Craft Site</h1>
                     <h2>Please sign in</h2>
-                    <fieldset>
-                        <label htmlFor="inputUsername"> Username </label>
-                        <input ref={username} type="username" id="username" className="form-control" placeholder="Username" required autoFocus />
-                    </fieldset>
-                    <fieldset>
-                        <label htmlFor="inputPassword"> Password </label>
-                        <input ref={password} type="password" id="password" className="form-control" placeholder="Password" required />
-                    </fieldset>
-                    <fieldset style={{
-                        textAlign: "center"
-                    }}>
-                        <button className="btn btn-1 btn-sep icon-send" type="submit">Sign In</button>
-                    </fieldset>
+                    <Stack spacing={2} sx={{ width: 552 }}>
+                        <FormControl fullWidth>
+                            <label htmlFor="inputUsername"> Username </label>
+                            <TextField inputRef={username} type="username" id="username" className="form-control" placeholder="Username" required autoFocus />
+                        </FormControl>
+                        <FormControl fullWidth>
+                            <label htmlFor="inputPassword"> Password </label>
+                            <TextField inputRef={password} type="password" id="password" className="form-control" placeholder="Password" required />
+                        </FormControl>
+                        <FormControl style={{
+                            textAlign: "center"
+                        }}>
+                            <Button className="btn btn-1 btn-sep icon-send" type="submit">Sign In</Button>
+                        </FormControl>
+                    </Stack>
                 </form>
-            </section>
+            </Box>
             <section className="link--register">
                 <Link to="/register">Not a member yet?</Link>
             </section>
-        </main>
+        </Container>
     )
 }

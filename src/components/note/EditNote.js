@@ -2,6 +2,11 @@ import { useState, useEffect } from "react";
 import "../project/project.css"
 import { editNote, getSingleNote } from "../../managers/ProjectManager";
 import { useParams, useNavigate } from "react-router-dom"
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import FormControl from '@mui/material/FormControl';
+import { TextField } from "@mui/material";
+import Container from '@mui/material/Container';
 
 export const EditNote = () => {
     const navigate = useNavigate()
@@ -28,17 +33,19 @@ export const EditNote = () => {
         }
     }
 
-    return<div>
+    return<Container maxWidth="sm">
+        <Box sx={{ minWidth: 120 }} className="text-center">
     <p className="alert">{errorMessage}</p>
     <form onSubmit={submitButton}>
-            <fieldset >
-                <textarea rows="10" cols ="40" type="text" value={`${note.note}`} onChange={(evt) => {
+            <FormControl fullWidth>
+                <TextField rows="10" cols ="40" type="text" value={`${note.note}`} onChange={(evt) => {
                     const copy = {...note}
                     copy.note = evt.target.value
                     setNote(copy)
-                }}> </textarea>
-            </fieldset>
-            <button type="submit" >Submit </button>
+                }}> </TextField>
+            </FormControl>
+            <Button type="submit" >Submit </Button>
         </form> 
-    </div>
+        </Box>
+    </Container>
 }

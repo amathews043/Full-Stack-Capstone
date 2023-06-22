@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react"
 import { getMyProjects } from "../../managers/ProjectManager.js"
-import { useNavigate, Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import "./project.css"
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import Stack from '@mui/material/Stack';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
 
 export const ProjectList = () => {
     const [projects, setProjects] = useState([])
@@ -13,34 +20,40 @@ export const ProjectList = () => {
     [])
 
     return (
-        <article className="text-center project-list-header"> 
-            <button onClick={() => navigate("/ProjectForm")}>Start a New Project</button>
+        <Container maxWidth="sm">
+            <div className="text-center margin-bottom-and-top-20px">
+            <Button variant="contained" onClick={() => navigate("/ProjectForm")} >Start a New Project</Button>
+            </div>
+            <Stack spacing={4}>
             {
                 projects.map((project) => {
-                        if (project.preview_image){
-                            return <div className="w-50 p-3 mx-auto p-2 shadow p-3 mb-5 bg-body-tertiary rounded " key={project.id}>
-                            <img src={project.preview_image} className="card-img-top" alt={project.name}/>
-                            <div className="card text-center " key={project.id}> 
-                                <div className="card-body">
-                                <h5 className="card-title"><Link to={`/projectDetails/${project.id}`}>{project.name}</Link></h5>
-                                    <p className="card-text">{project.description}</p>
-                                </div>
-                            </div>
-                            </div> 
-                        }else {
-                            return <div className="w-50 p-3 mx-auto p-2 shadow p-3 mb-5 bg-body-tertiary rounded " key={project.id}>
-                            <div className="card text-center " key={project.id}> 
-                                <div className="card-body">
-                                <h5 className="card-title"><Link to={`/projectDetails/${project.id}`}>{project.name}</Link></h5>
-                                    <p className="card-text">{project.description}</p>
-                                </div>
-                            </div>
-                        </div> 
-                        }
+                    return <Card key={project.id} sx={{ maxWidth: 800 }}>
+                        <CardContent>
+                            {
+                                project.preview_image ? 
+                                <CardMedia
+                                sx={{ height: 300 }}
+                                image={project.preview_image}
+                                title={project.name}
+                            />
+                            : <></>
+                            }
+                    
+                                    <Typography gutterBottom variant="h5" component="div">
+                                    <Button variant="contained" onClick={() => navigate(`/projectDetails/${project.id}`)}>
+                                        {project.name}
+                                    </Button>
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary">
+                                {project.description}
+                                </Typography>
+                            </CardContent>
+                        </Card>
                 
                 })
             }
-        </article>
+            </Stack>
+        </Container> 
     )
 
 }

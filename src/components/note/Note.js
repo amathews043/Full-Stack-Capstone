@@ -1,6 +1,11 @@
 import { useState } from "react";
 import "../project/project.css"
 import { newProjectNote } from "../../managers/ProjectManager";
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
+import FormControl from '@mui/material/FormControl';
+import { TextField } from "@mui/material";
 
 export const Note = ({projectId, updateProjectNotes}) => {
     const [showForm, setShowForm] = useState(false)
@@ -21,21 +26,23 @@ export const Note = ({projectId, updateProjectNotes}) => {
             updateProjectNotes()})
         }
     }
-    return<div>
-        <button onClick={() => {setShowForm(!showForm)}} className="newNoteHeader">Add a New Note</button>
+    return<Container maxWidth="sm">
+        <Box sx={{ minWidth: 120 }} className="text-center">
+        <Button variant="contained" onClick={() => {setShowForm(!showForm)}} className="newNoteHeader">Add a New Note</Button>
         <p className="alert">{errorMessage}</p>
         {
             showForm ? <form onSubmit={submitButton}>
-                <fieldset >
-                    <textarea rows="10" cols ="40" type="text" onChange={(evt) => {
+                <FormControl fullWidth>
+                    <TextField multiline rows="10" cols ="40" type="text" onChange={(evt) => {
                         const copy = {...newNote}
                         copy.note = evt.target.value
                         setNewNote(copy)
-                    }}> </textarea>
-                </fieldset>
-                <button type="submit" >Submit </button>
+                    }}/> 
+                </FormControl>
+                <Button variant="contained" type="submit" >Submit </Button>
             </form> : ""
         }
-    </div>
+        </Box>
+    </Container>
 }
 

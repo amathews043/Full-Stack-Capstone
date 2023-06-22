@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react"
 import { CloudinaryContext} from 'cloudinary-react';
+import Button from '@mui/material/Button';
 
 export const UploadWidget = ({setImageURL}) => {
     const widgetRef = useRef();
@@ -22,9 +23,9 @@ export const UploadWidget = ({setImageURL}) => {
 
     return <CloudinaryContext cloudName='duy4yg4hz'>
     <div>
-        <button type="button" id="addPicture" className="button is-link post-list-header" onClick={() => widgetRef.current.open()}>
+        <Button variant="contained" type="button" id="addPicture" className="button is-link post-list-header" onClick={() => widgetRef.current.open()}>
         Upload a Picture of the Project
-        </button>
+        </Button>
     </div>
     </CloudinaryContext>
 }
