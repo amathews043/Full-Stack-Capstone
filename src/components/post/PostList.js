@@ -42,9 +42,12 @@ export const PostList = () => {
                                         <></>
                                 }
                                 <Typography gutterBottom variant="h5" component="div">
+                                <Stack direction="row" spacing={2}>
                                     <Button variant="contained" onClick={() => navigate(`projectDetails/${post.project}`)}>
-                                        {post.project_name} by {post.creator_name}
+                                        {post.project_name} 
                                     </Button>
+                                    <Button variant="contained" onClick={() => navigate(`/${post.user}/profile`)}>by {post.creator_name}</Button>
+                                </Stack>
                                 </Typography>
                                 <Typography gutterBottom variant="h10" component="div">
                                     {post.post}

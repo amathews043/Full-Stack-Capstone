@@ -99,11 +99,13 @@ export const ProjectDetails = () => {
         handleCloseDeletePostPopup()
     }
 
-    return <Container maxWidth="sm">
+    return <Container maxWidth="md">
         <Box className="text-center">
-            <h2 className="text-center">{project.name} by {project.creator_name}</h2>
+            <h2 className="text-center">{project.name}</h2>
+            <h3> by</h3>
+            <Button variant="contained" onClick={() => navigate(`/${project.user_id}/profile`)}> {project.creator_name}</Button>
             <p>{project.description}</p>
-            {project.pattern_url ? <Button sx={{ bgcolor: "#94a6c7" }} variant="contained" className="button is-link" type="button">
+            {project.pattern_url ? <Button sx={{ bgcolor: "#94a6c7" }} variant="contained" type="button">
                 <Link to={project.pattern_url} className="link" target="_blank" rel="noreferrer noopener" > Link to Pattern </Link></Button> : ""}
             <Stack spacing={4}>
                 {
