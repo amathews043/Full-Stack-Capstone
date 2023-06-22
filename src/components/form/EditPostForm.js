@@ -82,7 +82,7 @@ export const EditPostForm = ({ postId, projectId, updateProjectPosts }) => {
     return (
         <Container maxWidth="sm">
         <Box sx={{ minWidth: 120 }} className="text-center">
-            <Button type="button" className="text-center toggle post-list-header" onClick={() => { setForm(!formShown) }}> Edit Post</Button>
+            <Button variant="contained" type="button" className="text-center toggle post-list-header" onClick={() => { setForm(!formShown) }}> Edit Post</Button>
             {
                 formShown ?
                     <form onSubmit={submit}>

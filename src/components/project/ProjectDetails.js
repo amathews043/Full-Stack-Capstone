@@ -32,6 +32,7 @@ export const ProjectDetails = () => {
     const user = parseInt(localStorage.getItem('user_id'))
     const [openDeleteProjectPopup, setOpenDeleteProjectPopup] = useState(false);
     const [openDeleteNotePopup, setOpenDeleteNotePopup] = useState(false)
+    const [openDeletePostPopup, setOpenDeletePostPopup] = useState(false)
 
     useEffect(() => {
         getCurrentProject(project_id).then((data) => {
@@ -85,6 +86,20 @@ export const ProjectDetails = () => {
         handleCloseDeleteNotePopup()
     }
 
+    const handleClickOpenDeletePostPopup = () => {
+        setOpenDeletePostPopup(true);
+    };
+
+    const handleCloseDeletePostPopup = () => {
+        setOpenDeletePostPopup(false);
+    };
+
+    const deleteCurrentPost = (postId) => {
+        deletePost(postId)
+            .then(() => getProjectPosts(postId).then(data => setPosts(data)))
+        handleCloseDeletePostPopup()
+    }
+
     return <Container maxWidth="sm">
         <Box className="text-center">
             <h2 className="text-center">{project.name} by {project.creator_name}</h2>
@@ -130,11 +145,32 @@ export const ProjectDetails = () => {
                                         post.user === user ? <div>
                                             <EditPostForm postId={post.id} projectId={post.project} updateProjectPosts={updateProjectPosts} />
                                             <Typography >
-                                                <Popup trigger={<Button variant="contained"> Delete Post</Button>} position={"right center"}>
-                                                    <div > Are you sure you want to delete me?  <div>
-                                                        <Button variant="contained" onClick={() => deletePost(post.id)
-                                                            .then(() => getProjectPosts(project.id).then(data => setPosts(data)))}>Delete</Button></div> </div>
-                                                </Popup>
+                                                <div className="margin-bottom-and-top-20px">
+                                                    <Button variant="contained" onClick={handleClickOpenDeletePostPopup}>
+                                                        Delete Post
+                                                    </Button>
+                                                </div>
+                                                <Dialog
+                                                    open={openDeletePostPopup}
+                                                    onClose={handleCloseDeletePostPopup}
+                                                    aria-labelledby="alert-dialog-title"
+                                                    aria-describedby="alert-dialog-description">
+                                                    <DialogTitle id="alert-dialog-title">
+                                                        {"Delete Post?"}
+                                                    </DialogTitle>
+                                                    <DialogContent>
+                                                        <DialogContentText id="alert-dialog-description">
+                                                            Are you sure you want to delete me? This cannot be undone.
+                                                        </DialogContentText>
+                                                    </DialogContent>
+                                                    <DialogActions>
+                                                        <Button variant="contained" onClick={() => deleteCurrentPost(post.id)}>Delete Post</Button>
+                                                        <Button variant="contained" onClick={handleCloseDeletePostPopup} autoFocus>
+                                                            Cancel
+                                                        </Button>
+                                                    </DialogActions>
+                                                </Dialog>
+
                                             </Typography>
                                         </div>
                                             : ""
@@ -166,16 +202,16 @@ export const ProjectDetails = () => {
                                                 <p className="card-text">{note.note}</p>
                                             </Typography>
                                             <div className="text-center">
-                                            <Box>
-                                            <Stack direction="row" spacing={2} justifyContent='center'>
-                                                <Button variant="contained" onClick={() => {
-                                                navigate(`/editNote/${note.id}`)
-                                            }}
-                                            > Edit Note </Button>
-                                                <Button variant="contained" onClick={handleClickOpenDeleteNotePopup}>
-                                                    Delete Note
-                                                </Button>
-                                                </Stack>
+                                                <Box>
+                                                    <Stack direction="row" spacing={2} justifyContent='center'>
+                                                        <Button variant="contained" onClick={() => {
+                                                            navigate(`/editNote/${note.id}`)
+                                                        }}
+                                                        > Edit Note </Button>
+                                                        <Button variant="contained" onClick={handleClickOpenDeleteNotePopup}>
+                                                            Delete Note
+                                                        </Button>
+                                                    </Stack>
                                                 </Box>
                                                 <Dialog
                                                     open={openDeleteNotePopup}
