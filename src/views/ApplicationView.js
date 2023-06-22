@@ -9,6 +9,7 @@ import { ProjectDetails } from "../components/project/ProjectDetails"
 import { EditNote } from "../components/note/EditNote"
 import { EditProjectForm } from "../components/form/EditProjectForm"
 import { UserProfile } from "../components/profile/UserProfile"
+import { OtherUserProfile } from "../components/profile/OtherUserProfile"
 
 
 
@@ -25,6 +26,7 @@ export const ApplicationView = () => {
                 <Route path="editNote/:note_id" element={<EditNote/>}/>
                 <Route path="editProject/:project_id" element={<EditProjectForm/>}/>
                 <Route path="myProfile" element={<UserProfile/>}/>
+                <Route path=":userId/profile" element={<OtherUserProfile/>}/>
                 
             </Route>
         </Routes>

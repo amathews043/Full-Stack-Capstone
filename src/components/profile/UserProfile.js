@@ -175,15 +175,18 @@ export const UserProfile = () => {
                                         <></>
                                 }
                                 <Typography gutterBottom variant="h5" component="div">
-                                    <Button variant="contained" onClick={() => navigate(`projectDetails/${post.project}`)}>
-                                        {post.project_name} by {post.creator_name}
-                                    </Button>
+                                    <div className="margin-bottom-and-top-20px">
+                                        <Button variant="contained" onClick={() => navigate(`/projectDetails/${post.project}`)}>
+                                            {post.project_name}
+                                        </Button>
+                                    </div>
                                 </Typography>
                                 <div className="margin-bottom-and-top-20px">
                                     <Typography variant="body2" color="text.secondary">
                                         {post.post}
                                     </Typography>
                                 </div>
+                                
                                 <Stack direction="row" spacing={2}>
                                     {
                                         post.tags.map((tag) => {

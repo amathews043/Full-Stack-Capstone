@@ -96,3 +96,12 @@ export const deletePost = (postId) => {
         }
     })
 }
+
+export const getOtherUserPostsForProfile = (userId) => {
+    return fetch(`http://localhost:8000/posts/${userId}/other_user_post_list`, {
+        headers:{
+            "Authorization": `Token ${localStorage.getItem("token")}`
+        }
+    })
+    .then(response => response.json())
+}
