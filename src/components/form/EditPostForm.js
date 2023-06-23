@@ -17,7 +17,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 
 
-export const EditPostForm = ({ postId, projectId, updateProjectPosts }) => {
+export const EditPostForm = ({ postId, projectId, updatePostCallback }) => {
     const [tags, setTags] = useState([])
     const [myProjects, setMyProjects] = useState([])
     const [autofillLoading, setAutofillLoading] = useState(false)
@@ -64,7 +64,7 @@ export const EditPostForm = ({ postId, projectId, updateProjectPosts }) => {
             setErrorMessage("Please Complete All Required Fields")
         } else {
             editPost(post).then(() => {
-                updateProjectPosts(post.project)
+                updatePostCallback(post)
                 setForm(!formShown)
             })
         }
@@ -85,9 +85,9 @@ export const EditPostForm = ({ postId, projectId, updateProjectPosts }) => {
             <Button variant="contained" type="button" className="text-center toggle post-list-header" onClick={() => { setForm(!formShown) }}> Edit Post</Button>
             {
                 formShown ?
-                    <form onSubmit={submit}>
+                    <form justifyContent="center" onSubmit={submit}>
                         <p className="alert">{errorMessage}</p>
-                        <Stack spacing={2} sx={{ width: 552 }}>
+                        <Stack spacing={2} sx={{ width: 550 }}>
                             <FormControl fullWidth>
                                 <InputLabel>Please Choose a Project:*</InputLabel>
                                 <Select value={postProject} label="Please Choose a Project"
@@ -121,7 +121,7 @@ export const EditPostForm = ({ postId, projectId, updateProjectPosts }) => {
                             </FormControl>
                             {
                                 autofillLoading ? <div> <CircularProgress /> </div> : <div>
-                                    <Button type="button" onClick={() => {
+                                    <Button variant="contained" type="button" onClick={() => {
                                         if (postTags && postProject) {
                                             setErrorMessage("")
                                             const postForAutofill = {
@@ -156,9 +156,12 @@ export const EditPostForm = ({ postId, projectId, updateProjectPosts }) => {
                             }
 
                             <UploadWidget setImageURL={setImageURL} />
-
-                            <Button type="submit" className="post-list-header"> Submit</Button>
-                            <Button type="button" className="ost-list-header" onClick={() => setForm(!formShown)}> Cancel</Button>
+                            <div>
+                            <Stack justifyContent="center" direction="row" spacing={2}>
+                            <Button variant="contained" type="submit" className="post-list-header"> Submit</Button>
+                            <Button variant="contained" type="button" className="ost-list-header" onClick={() => setForm(!formShown)}> Cancel</Button>
+                            </Stack>
+                            </div>
                         </Stack>
                     </form>
                     :

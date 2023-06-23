@@ -52,10 +52,10 @@ export const PostList = () => {
                                 </Stack>
                                 </div>
                                 </Typography>
-                                <Typography gutterBottom variant="h10" component="div">
+                                <Typography  gutterBottom variant="h10" component="div">
                                     {post.post}
                                 </Typography>
-                                <Stack direction="row" spacing={2}>
+                                <Stack  direction="row" spacing={2}>
                                     {
                                         post.tags.map((tag) => {
                                             return <Chip label={tag.tag} size="small" key={tag.id} />

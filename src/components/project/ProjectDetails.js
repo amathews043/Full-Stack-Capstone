@@ -57,8 +57,8 @@ export const ProjectDetails = () => {
         });
     };
 
-    const updateProjectPosts = (projectId) => {
-        getProjectPosts(projectId).then((data) => {
+    const updatePostCallback = (_post) => {
+        getProjectPosts(project.id).then((data) => {
             setPosts(data.reverse());
         });
     };
@@ -124,7 +124,7 @@ export const ProjectDetails = () => {
                 <Stack spacing={10}>
                     {
                         posts.map((post) => {
-                            return <Card key={post.id} sx={{ maxWidth: 800 }}>
+                            return <Card key={post.id} sx={{ maxWidth: 1500 }}>
                                 <CardContent>
                                     {
                                         post.image ?
@@ -136,7 +136,7 @@ export const ProjectDetails = () => {
                                             :
                                             <></>
                                     }
-                                    <Typography gutterBottom variant="h5" component="div">
+                                    <Typography gutterBottom variant="h5" component="div" >
                                         <h5 className="card-title">{post.project_name} by {post.creator_name}</h5>
                                     </Typography>
                                     <Typography gutterBottom variant="h10" component="div">
@@ -144,7 +144,7 @@ export const ProjectDetails = () => {
                                     </Typography>
                                     {
                                         post.user === user ? <div>
-                                            <EditPostForm postId={post.id} projectId={post.project} updateProjectPosts={updateProjectPosts} />
+                                            <EditPostForm postId={post.id} projectId={post.project} updatePostCallback={updatePostCallback} />
                                             <Typography >
                                                 <div className="margin-bottom-and-top-20px">
                                                     <Button variant="contained" onClick={handleClickOpenDeletePostPopup}>
