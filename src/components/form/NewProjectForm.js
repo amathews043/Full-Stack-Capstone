@@ -122,7 +122,7 @@ export const NewProjectForm = () => {
                                     }
                                 />
                             </FormControl>
-                    <Button type="submit" className="post-list-header" onClick={(clickEvt) => submit(clickEvt)}> Submit</Button>
+                    <Button type="submit" variant="contained" className="post-list-header" onClick={(clickEvt) => submit(clickEvt)}> Submit</Button>
                 </Stack>
             </form>
         </Box>

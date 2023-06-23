@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { getTags, getSinglePost, getProjectPosts, deletePost } from "../../managers/PostManager"
+import { getTags, getSinglePost, deletePost } from "../../managers/PostManager"
 import { getMyProjects } from "../../managers/ProjectManager"
 import { newPost, autofillPost } from "../../managers/PostManager"
 import "../post/post.css"
