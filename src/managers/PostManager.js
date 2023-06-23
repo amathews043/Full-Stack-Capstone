@@ -105,3 +105,4 @@ export const getOtherUserPostsForProfile = (userId) => {
     })
     .then(response => response.json())
 }
+

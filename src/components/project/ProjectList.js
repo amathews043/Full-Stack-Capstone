@@ -21,6 +21,7 @@ export const ProjectList = () => {
 
     return (
         <Container maxWidth="sm">
+            <h1 className="text-center">My Projects</h1>
             <div className="text-center margin-bottom-and-top-20px">
             <Button variant="contained" onClick={() => navigate("/ProjectForm")} >Start a New Project</Button>
             </div>
@@ -38,12 +39,13 @@ export const ProjectList = () => {
                             />
                             : <></>
                             }
-                    
-                                    <Typography gutterBottom variant="h5" component="div">
+                                    <div className="margin-bottom-and-top-20px">
+                                    <Typography gutterBottom variant="h5" component="div" >
                                     <Button variant="contained" onClick={() => navigate(`/projectDetails/${project.id}`)}>
                                         {project.name}
                                     </Button>
                                 </Typography>
+                                </div>
                                 <Typography variant="body2" color="text.secondary">
                                 {project.description}
                                 </Typography>
