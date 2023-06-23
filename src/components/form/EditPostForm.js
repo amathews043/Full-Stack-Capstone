@@ -17,7 +17,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 
 
-export const EditPostForm = ({ postId, projectId, updatePostCallback }) => {
+export const EditPostForm = ({ postId, updatePostCallback }) => {
     const [tags, setTags] = useState([])
     const [myProjects, setMyProjects] = useState([])
     const [autofillLoading, setAutofillLoading] = useState(false)

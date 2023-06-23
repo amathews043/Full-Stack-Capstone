@@ -30,8 +30,8 @@ export const ProjectDetails = () => {
     const [posts, setPosts] = useState([])
     const user = parseInt(localStorage.getItem('user_id'))
     const [openDeleteProjectPopup, setOpenDeleteProjectPopup] = useState(false);
-    const [openDeleteNotePopup, setOpenDeleteNotePopup] = useState(false)
-    const [openDeletePostPopup, setOpenDeletePostPopup] = useState(false)
+    const [postDeleteDialogueId, setPostDeleteDialogueId] = useState(undefined)
+    const [noteDeleteDialogueId, setNoteDeleteDialogueId] = useState(undefined)
 
     useEffect(() => {
         getCurrentProject(project_id).then((data) => {
@@ -41,7 +41,7 @@ export const ProjectDetails = () => {
 
     useEffect(() => {
         getProjectPosts(project_id).then((data) => {
-            setPosts(data.reverse())
+            setPosts(data)
         })
     }, [project_id])
 
@@ -59,7 +59,7 @@ export const ProjectDetails = () => {
 
     const updatePostCallback = (_post) => {
         getProjectPosts(project.id).then((data) => {
-            setPosts(data.reverse());
+            setPosts(data);
         });
     };
 
@@ -71,32 +71,14 @@ export const ProjectDetails = () => {
         setOpenDeleteProjectPopup(false);
     };
 
-    const handleClickOpenDeleteNotePopup = () => {
-        setOpenDeleteNotePopup(true);
-    };
-
-    const handleCloseDeleteNotePopup = () => {
-        setOpenDeleteNotePopup(false);
-    };
-
     const deleteNote = (noteId) => {
         deleteProjectNote(noteId)
             .then(() => getProjectNotes(project.id).then(data => setNotes(data)))
-        handleCloseDeleteNotePopup()
     }
-
-    const handleClickOpenDeletePostPopup = () => {
-        setOpenDeletePostPopup(true);
-    };
-
-    const handleCloseDeletePostPopup = () => {
-        setOpenDeletePostPopup(false);
-    };
 
     const deleteCurrentPost = (postId) => {
         deletePost(postId)
-            .then(() => getProjectPosts(postId).then(data => setPosts(data)))
-        handleCloseDeletePostPopup()
+            .then(() => getProjectPosts(project.id).then(data => setPosts(data)))
     }
 
     return <Container maxWidth="md">
@@ -117,7 +99,7 @@ export const ProjectDetails = () => {
 
                 {
                     project.inspirations?.map((inspiration) => {
-                        return <div className="margin-bottom-and-top-20px"> <Button variant="contained" className="text-center" onClick={() => navigate(`/projectDetails/${inspiration.id}`)} key={inspiration.id} > {inspiration.name} </Button>
+                        return <div key={inspiration.id} className="margin-bottom-and-top-20px"> <Button variant="contained" className="text-center" onClick={() => navigate(`/projectDetails/${inspiration.id}`)} key={inspiration.id} > {inspiration.name} </Button>
                         </div>
                     })
                 }
@@ -144,16 +126,16 @@ export const ProjectDetails = () => {
                                     </Typography>
                                     {
                                         post.user === user ? <div>
-                                            <EditPostForm postId={post.id} projectId={post.project} updatePostCallback={updatePostCallback} />
+                                            <EditPostForm postId={post.id} updatePostCallback={updatePostCallback} />
                                             <Typography >
                                                 <div className="margin-bottom-and-top-20px">
-                                                    <Button variant="contained" onClick={handleClickOpenDeletePostPopup}>
-                                                        Delete Post
+                                                    <Button variant="contained" onClick={() => setPostDeleteDialogueId(post.id)}>
+                                                        Delete Post 
                                                     </Button>
                                                 </div>
                                                 <Dialog
-                                                    open={openDeletePostPopup}
-                                                    onClose={handleCloseDeletePostPopup}
+                                                    open={postDeleteDialogueId === post.id}
+                                                    onClose={() => setPostDeleteDialogueId(undefined)}
                                                     aria-labelledby="alert-dialog-title"
                                                     aria-describedby="alert-dialog-description">
                                                     <DialogTitle id="alert-dialog-title">
@@ -165,8 +147,8 @@ export const ProjectDetails = () => {
                                                         </DialogContentText>
                                                     </DialogContent>
                                                     <DialogActions>
-                                                        <Button variant="contained" onClick={() => deleteCurrentPost(post.id)}>Delete Post</Button>
-                                                        <Button variant="contained" onClick={handleCloseDeletePostPopup} autoFocus>
+                                                        <Button variant="contained" onClick={() => deleteCurrentPost(post.id)}>Delete Post </Button>
+                                                        <Button variant="contained" onClick={() => setPostDeleteDialogueId(undefined)} autoFocus>
                                                             Cancel
                                                         </Button>
                                                     </DialogActions>
@@ -197,7 +179,7 @@ export const ProjectDetails = () => {
                         <Stack spacing={4}>
                             {
                                 notes?.map((note) => {
-                                    return <Card key={note.id} sx={{ maxWidth: 800 }}>
+                                    return <Card key={note.id} sx={{ maxWidth: 1200 }}>
                                         <CardContent>
                                             <Typography gutterBottom variant="h10" component="div">
                                                 <p className="card-text">{note.note}</p>
@@ -209,14 +191,14 @@ export const ProjectDetails = () => {
                                                             navigate(`/editNote/${note.id}`)
                                                         }}
                                                         > Edit Note </Button>
-                                                        <Button variant="contained" onClick={handleClickOpenDeleteNotePopup}>
+                                                        <Button variant="contained" onClick={() => setNoteDeleteDialogueId(note.id)}>
                                                             Delete Note
                                                         </Button>
                                                     </Stack>
                                                 </Box>
                                                 <Dialog
-                                                    open={openDeleteNotePopup}
-                                                    onClose={handleCloseDeleteNotePopup}
+                                                    open={noteDeleteDialogueId === note.id}
+                                                    onClose={() => setNoteDeleteDialogueId(undefined)}
                                                     aria-labelledby="alert-dialog-title"
                                                     aria-describedby="alert-dialog-description">
                                                     <DialogTitle id="alert-dialog-title">
@@ -229,7 +211,7 @@ export const ProjectDetails = () => {
                                                     </DialogContent>
                                                     <DialogActions>
                                                         <Button variant="contained" onClick={() => deleteNote(note.id)}>Delete Note</Button>
-                                                        <Button variant="contained" onClick={handleCloseDeleteNotePopup} autoFocus>
+                                                        <Button variant="contained" onClick={() => setNoteDeleteDialogueId(undefined)} autoFocus>
                                                             Cancel
                                                         </Button>
                                                     </DialogActions>

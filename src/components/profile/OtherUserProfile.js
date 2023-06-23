@@ -11,13 +11,6 @@ import CardMedia from '@mui/material/CardMedia';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import FormControl from '@mui/material/FormControl';
-import { TextField } from "@mui/material";
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 
 import { getOtherUserProfile } from "../../managers/ProfileManager"
 import { getOtherUserPostsForProfile } from "../../managers/PostManager";
