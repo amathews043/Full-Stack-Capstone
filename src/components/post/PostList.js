@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
+import Box from '@mui/material/Box';
 
 import "./post.css"
 
@@ -26,49 +27,65 @@ export const PostList = () => {
             <h1 className="text-center">Handmade Hangout</h1>
             <NewPostForm />
             <Container maxWidth="md">
-            <h2 className="text-center"> See What Other Crafters are Making</h2>
-            <Stack spacing={4}>
-                {
-                    posts.map((post) => {
-                        return <Card key={post.id} sx={{ maxWidth: 1000 }} >
-                            <CardContent>
-                                {
-                                    post.image ?
-                                        <CardMedia
-                                            sx={{ height: 500 }}
-                                            image={post.image}
-                                            title={post.project_name}
-                                        />
-                                        :
-                                        <></>
-                                }
-                                <Typography gutterBottom variant="h5" component="div">
-                                <div className="margin-bottom-and-top-20px">
-                                <Stack direction="row" spacing={2}>
-                                    <Button variant="contained" onClick={() => navigate(`projectDetails/${post.project}`)}>
-                                        {post.project_name} 
-                                    </Button>
-                                    <Button variant="contained" onClick={() => navigate(`/${post.user}/profile`)}>by {post.creator_name}</Button>
-                                </Stack>
-                                </div>
-                                </Typography>
-                                <Typography  gutterBottom variant="h10" component="div">
-                                    {post.post}
-                                </Typography>
-                                <Stack  direction="row" spacing={2}>
+                <h2 className="text-center"> See What Other Crafters are Making</h2>
+                <Stack spacing={4}>
+                    {
+                        posts.map((post) => {
+                            return <Box> <Card key={post.id} sx={{ maxWidth: 1000 }} >
+                                <CardContent>
                                     {
-                                        post.tags.map((tag) => {
-                                            return <Chip label={tag.tag} size="small" key={tag.id} />
-                                        })
+                                        post.image ?
+                                            <CardMedia
+                                                sx={{ height: 500 }}
+                                                image={post.image}
+                                                title={post.project_name}
+                                            />
+                                            :
+                                            <></>
                                     }
-                                </Stack>
-                            </CardContent>
-                        </Card>
+                                    <Typography gutterBottom variant="h5" component="div">
+                                        <div className="margin-bottom-and-top-20px">
+                                            <Stack direction="row" spacing={2}>
+                                                <Button variant="contained" onClick={() => navigate(`projectDetails/${post.project}`)}>
+                                                    {post.project_name}
+                                                </Button>
+                                                <Button variant="contained" onClick={() => navigate(`/${post.user}/profile`)}>by {post.creator_name}</Button>
+                                            </Stack>
+                                        </div>
+                                    </Typography>
+                                    <Typography gutterBottom variant="h10" component="div">
+                                        {post.post}
+                                    </Typography>
+                                    <Stack direction="row" spacing={2}>
+                                        {
+                                            post.tags.map((tag) => {
+                                                return <Chip label={tag.tag} size="small" key={tag.id} />
+                                            })
+                                        }
+                                    </Stack>
+                                </CardContent>
+                            </Card>
+                                {
+                                    (post.post_comments.length >= 1) ? 
+                                    post.post_comments.map((comment) => {
+                                        return <Card className="margin-top-5px" sx={{ maxWidth: 500 }}>
+                                        <CardContent>
+                                            {comment.message}
+                                            <div className="margin-top-5px">
+                                            <Chip label={comment.sender_name}/>
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+                                    }) 
+                                    
+                                    : ""
+                                }
+                            </Box>
 
-                    })
-                }
-            </Stack>
-        </Container>
+                        })
+                    }
+                </Stack>
+            </Container>
         </article>
     )
 }

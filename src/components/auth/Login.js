@@ -42,7 +42,7 @@ export const Login = () => {
             </dialog>
             <Box>
                 <form className="form--login" onSubmit={handleLogin}>
-                    <h1>Craft Site</h1>
+                    <h1>Handmade Hangout</h1>
                     <h2>Please sign in</h2>
                     <Stack spacing={2} sx={{ width: 552 }}>
                         <FormControl fullWidth>
