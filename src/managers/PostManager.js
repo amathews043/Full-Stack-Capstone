@@ -106,3 +106,14 @@ export const getOtherUserPostsForProfile = (userId) => {
     .then(response => response.json())
 }
 
+export const newComment = (comment) => {
+    return fetch(`http://localhost:8000/comments`, {
+        method: "POST",
+        headers:{
+            "Content-Type": "application/json",
+            "Authorization": `Token ${localStorage.getItem("token")}`
+        }, 
+        body: JSON.stringify(comment)
+    })
+    .then(response => response.json())
+}

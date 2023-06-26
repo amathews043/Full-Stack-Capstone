@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { getOtherUserPosts } from "../../managers/PostManager.js"
+import { getOtherUserPosts, newComment } from "../../managers/PostManager.js"
 import { useNavigate } from "react-router-dom"
 import { NewPostForm } from "../form/NewPostForm.js"
 import Card from '@mui/material/Card';
@@ -11,16 +11,32 @@ import Container from '@mui/material/Container';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+
+
 
 import "./post.css"
 
 export const PostList = () => {
     const [posts, setPosts] = useState([])
+    const [comment, setComment] = useState('')
     const navigate = useNavigate()
 
     useEffect(() => {
         getOtherUserPosts().then(data => setPosts(data.reverse()))
     }, [])
+
+    const handleSubmitComment = (postId) => {
+        const commentToSubmit = {
+            "message": comment,
+            "post": postId
+        }
+
+        newComment(commentToSubmit).then(() => getOtherUserPosts()).then((data) => {
+            setComment('')
+            setPosts(data.reverse())
+        })
+    }
 
     return (
         <article>
@@ -66,20 +82,47 @@ export const PostList = () => {
                                 </CardContent>
                             </Card>
                                 {
-                                    (post.post_comments.length >= 1) ? 
-                                    post.post_comments.map((comment) => {
-                                        return <Card className="margin-top-5px" sx={{ maxWidth: 500 }}>
-                                        <CardContent>
-                                            {comment.message}
-                                            <div className="margin-top-5px">
-                                            <Chip label={comment.sender_name}/>
-                                            </div>
-                                        </CardContent>
-                                    </Card>
-                                    }) 
-                                    
-                                    : ""
+                                    (post.post_comments.length >= 1) ?
+                                        post.post_comments.map((comment) => {
+                                            return <Card className="margin-top-5px" sx={{ maxWidth: 500 }}>
+                                                <CardContent>
+                                                    <div className="margin-top-5px">
+                                                        <Chip label={comment.sender_name} onClick={() => navigate((`/${comment.sender}/profile`))} />
+                                                    </div>
+                                                    {comment.message}
+                                                </CardContent>
+                                            </Card>
+                                        })
+
+                                        : ""
                                 }
+                                <Stack direction="row" spacing={2}>
+                                    <TextField
+                                        placeholder="Add a Comment"
+                                        minRows={3}
+                                        endDecorator={
+                                            <Box
+                                                sx={{
+                                                    display: 'flex',
+                                                    gap: 'var(--Textarea-paddingBlock)',
+                                                    pt: 'var(--Textarea-paddingBlock)',
+                                                    borderTop: '1px solid',
+                                                    borderColor: 'divider',
+                                                    flex: 'auto',
+                                                }}
+                                            >
+
+                                            </Box>
+                                        }
+                                        onChange={(evt) => {
+                                            setComment(evt.target.value)
+                                        }}
+                                        sx={{
+                                            minWidth: 300,
+                                        }}
+                                    />
+                                    <Button variant="contained" onClick={() => handleSubmitComment(post.id)} >Submit</Button>
+                                </Stack>
                             </Box>
 
                         })
