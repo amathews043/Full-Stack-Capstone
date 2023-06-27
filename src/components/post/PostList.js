@@ -117,6 +117,7 @@ export const PostList = () => {
                                         onChange={(evt) => {
                                             setComment(evt.target.value)
                                         }}
+                                        value = {comment}
                                         sx={{
                                             minWidth: 300,
                                         }}
