@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { getOtherUserPosts, newComment } from "../../managers/PostManager.js"
+import { PostDetails } from "./PostDetails.js"
 import { useNavigate } from "react-router-dom"
 import { NewPostForm } from "../form/NewPostForm.js"
 import Card from '@mui/material/Card';
@@ -22,8 +23,12 @@ export const PostList = () => {
     const [comment, setComment] = useState('')
     const navigate = useNavigate()
 
-    useEffect(() => {
+    const refreshPosts = () => {
         getOtherUserPosts().then(data => setPosts(data.reverse()))
+    }
+
+    useEffect(() => {
+        refreshPosts()
     }, [])
 
     const handleSubmitComment = (postId) => {
@@ -47,85 +52,7 @@ export const PostList = () => {
                 <Stack spacing={4}>
                     {
                         posts.map((post) => {
-                            return <Box> <Card key={post.id} sx={{ maxWidth: 1000 }} >
-                                <CardContent>
-                                    {
-                                        post.image ?
-                                            <CardMedia
-                                                sx={{ height: 500 }}
-                                                image={post.image}
-                                                title={post.project_name}
-                                            />
-                                            :
-                                            <></>
-                                    }
-                                    <Typography gutterBottom variant="h5" component="div">
-                                        <div className="margin-bottom-and-top-20px">
-                                            <Stack direction="row" spacing={2}>
-                                                <Button variant="contained" onClick={() => navigate(`projectDetails/${post.project}`)}>
-                                                    {post.project_name}
-                                                </Button>
-                                                <Button variant="contained" onClick={() => navigate(`/${post.user}/profile`)}>by {post.creator_name}</Button>
-                                            </Stack>
-                                        </div>
-                                    </Typography>
-                                    <Typography gutterBottom variant="h10" component="div">
-                                        {post.post}
-                                    </Typography>
-                                    <Stack direction="row" spacing={2}>
-                                        {
-                                            post.tags.map((tag) => {
-                                                return <Chip label={tag.tag} size="small" key={tag.id} />
-                                            })
-                                        }
-                                    </Stack>
-                                </CardContent>
-                            </Card>
-                                {
-                                    (post.post_comments.length >= 1) ?
-                                        post.post_comments.map((comment) => {
-                                            return <Card className="margin-top-5px" sx={{ maxWidth: 500 }}>
-                                                <CardContent>
-                                                    <div className="margin-top-5px">
-                                                        <Chip label={comment.sender_name} onClick={() => navigate((`/${comment.sender}/profile`))} />
-                                                    </div>
-                                                    {comment.message}
-                                                </CardContent>
-                                            </Card>
-                                        })
-
-                                        : ""
-                                }
-                                <Stack direction="row" spacing={2}>
-                                    <TextField
-                                        placeholder="Add a Comment"
-                                        minRows={3}
-                                        endDecorator={
-                                            <Box
-                                                sx={{
-                                                    display: 'flex',
-                                                    gap: 'var(--Textarea-paddingBlock)',
-                                                    pt: 'var(--Textarea-paddingBlock)',
-                                                    borderTop: '1px solid',
-                                                    borderColor: 'divider',
-                                                    flex: 'auto',
-                                                }}
-                                            >
-
-                                            </Box>
-                                        }
-                                        onChange={(evt) => {
-                                            setComment(evt.target.value)
-                                        }}
-                                        value = {comment}
-                                        sx={{
-                                            minWidth: 300,
-                                        }}
-                                    />
-                                    <Button variant="contained" onClick={() => handleSubmitComment(post.id)} >Submit</Button>
-                                </Stack>
-                            </Box>
-
+                            return <PostDetails refreshPosts={refreshPosts} post={post} />
                         })
                     }
                 </Stack>
