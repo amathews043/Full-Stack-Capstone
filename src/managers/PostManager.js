@@ -118,4 +118,12 @@ export const newComment = (comment) => {
     .then(response => response.json())
 }
 
-export
+export const deleteComment = (commentId) => {
+    return fetch(`http://localhost:8000/comments/${commentId}`, {
+        method: "DELETE",
+        headers:{
+            "Content-Type": "application/json",
+            "Authorization": `Token ${localStorage.getItem("token")}`
+        }, 
+    })
+}

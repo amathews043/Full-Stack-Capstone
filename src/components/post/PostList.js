@@ -28,7 +28,7 @@ export const PostList = () => {
                 <Stack spacing={4}>
                     {
                         posts.map((post) => {
-                            return <PostDetails refreshPosts={refreshPosts} post={post} />
+                            return <PostDetails refreshPosts={refreshPosts} post={post} key={post.id} />
                         })
                     }
                 </Stack>
