@@ -117,3 +117,5 @@ export const newComment = (comment) => {
     })
     .then(response => response.json())
 }
+
+export
