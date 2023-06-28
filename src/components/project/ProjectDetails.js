@@ -129,7 +129,7 @@ export const ProjectDetails = () => {
                                             <EditPostForm postId={post.id} updatePostCallback={updatePostCallback} />
                                             <Typography >
                                                 <div className="margin-bottom-and-top-20px">
-                                                    <Button variant="contained" onClick={() => setPostDeleteDialogueId(post.id)}>
+                                                    <Button className='underline' size='large' type="submit" variant="filledTonal" onClick={() => setPostDeleteDialogueId(post.id)}>
                                                         Delete Post 
                                                     </Button>
                                                 </div>
@@ -187,11 +187,11 @@ export const ProjectDetails = () => {
                                             <div className="text-center">
                                                 <Box>
                                                     <Stack direction="row" spacing={2} justifyContent='center'>
-                                                        <Button variant="contained" onClick={() => {
+                                                        <Button className='underline' size='large' variant="filledTonal" onClick={() => {
                                                             navigate(`/editNote/${note.id}`)
                                                         }}
                                                         > Edit Note </Button>
-                                                        <Button variant="contained" onClick={() => setNoteDeleteDialogueId(note.id)}>
+                                                        <Button className='underline' size='large' variant="filledTonal" onClick={() => setNoteDeleteDialogueId(note.id)}>
                                                             Delete Note
                                                         </Button>
                                                     </Stack>
@@ -224,7 +224,7 @@ export const ProjectDetails = () => {
                             }
                         </Stack>
                         <div className="margin-bottom-and-top-20px">
-                            <Button variant="contained" onClick={handleClickOpenDeleteProjectPopup}>
+                            <Button className='underline' size='large' variant="filledTonal" onClick={handleClickOpenDeleteProjectPopup}>
                                 Delete Project
                             </Button>
                         </div>
@@ -244,7 +244,7 @@ export const ProjectDetails = () => {
                             </DialogContent>
                             <DialogActions>
                                 <Button variant="contained" onClick={() => deleteProject(project_id)
-                                    .then(() => navigate("/projectList"))}>Delete Project</Button>
+                                    .then(() => navigate("/projectList"))} >Delete Project</Button>
                                 <Button variant="contained" onClick={handleCloseDeleteProjectPopup} autoFocus>
                                     Cancel
                                 </Button>

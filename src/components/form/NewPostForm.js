@@ -110,7 +110,7 @@ export const NewPostForm = () => {
     return (<Container maxWidth="md">
         <Box justifyContent="center" className="text-center">
             <div className="margin-bottom-and-top-20px">
-                <Button variant="contained" type="button" onClick={() => { setForm(!formShown) }}> Create a New Post</Button>
+                <Button className="underline" size='large' variant="filledTonal" type="button" onClick={() => { setForm(!formShown) }}> Create a New Post</Button>
             </div>
         </Box>
         {
@@ -147,7 +147,7 @@ export const NewPostForm = () => {
                             <EditPostForm postId={savedPost.id} projectId={savedPost.project} updatePostCallback={updatePostCallback} />
                             <Typography >
                                 <div className="margin-bottom-and-top-20px text-center">
-                                    <Button variant="contained" onClick={handleClickOpenDeletePostPopup}>
+                                    <Button size='large' variant="filledTonal" onClick={handleClickOpenDeletePostPopup}>
                                         Delete Post
                                     </Button>
                                 </div>
@@ -218,7 +218,8 @@ export const NewPostForm = () => {
                             </FormControl>
                             {
                                 autofillLoading ? <div> <CircularProgress /> </div> : <div>
-                                    <Button variant="contained" type="button" onClick={() => {
+                                    <div className="margin-bottom-5px"> 
+                                    <Button className="underline" size='large' variant="filledTonal" type="button" onClick={() => {
                                         if (postTags && postProject) {
                                             setErrorMessage("")
                                             const postForAutofill = {
@@ -235,6 +236,7 @@ export const NewPostForm = () => {
                                             setErrorMessage("Please add Project and Tags to your post")
                                         }
                                     }}>AutoFill Post?</Button>
+                                    </div>
                                     <FormControl fullWidth>
                                         <TextField required autoFocus
                                             multiline
@@ -255,7 +257,7 @@ export const NewPostForm = () => {
                             <UploadWidget setImageURL={setImageURL} />
                         </Stack>
                         <div className="margin-bottom-and-top-20px">
-                            <Button variant="contained" type="submit" > Submit</Button>
+                            <Button className="underline" size='large' variant="filledTonal" type="submit" > Submit</Button>
                         </div>
                     </form>
                     :
