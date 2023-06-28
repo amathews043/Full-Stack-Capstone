@@ -28,7 +28,7 @@ export const Note = ({projectId, updateProjectNotes}) => {
     }
     return<Container maxWidth="sm">
         <Box sx={{ minWidth: 120 }} className="text-center">
-        <Button variant="contained" onClick={() => {setShowForm(!showForm)}} className="newNoteHeader">Add a New Note</Button>
+        <Button size='large' variant="filledTonal" onClick={() => {setShowForm(!showForm)}} className="newNoteHeader underline">Add a New Note</Button>
         <p className="alert">{errorMessage}</p>
         {
             showForm ? <form onSubmit={submitButton}>

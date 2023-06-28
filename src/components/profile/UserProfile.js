@@ -68,7 +68,7 @@ export const UserProfile = () => {
         <Box sx={{ minWidth: 120 }} className="text-center">
             <h2>My Profile </h2>
             <div className="margin-bottom-and-top-20px">
-                <Button variant="contained" onClick={() => setForm(!formShown)}> Edit Profile</Button>
+                <Button className="underline" size='large' variant="filledTonal" onClick={() => setForm(!formShown)}> Edit Profile</Button>
             </div>
             {
                 formShown ?
@@ -91,7 +91,7 @@ export const UserProfile = () => {
                             <ProfilePictureUploadWidget setImageURL={setImageURL} />
                         </div>
                         <div className="margin-bottom-and-top-20px">
-                            <Button variant="contained" type="submit">Submit Changes</Button>
+                            <Button className="underline" size='large' variant="filledTonal" type="submit">Submit Changes</Button>
                         </div>
                     </form>
 
@@ -116,7 +116,7 @@ export const UserProfile = () => {
 
 
                                         <div className="margin-bottom-and-top-20px">
-                                            <Button variant="contained" onClick={handleClickOpen}>
+                                            <Button size='large' variant="filledTonal" onClick={handleClickOpen}>
                                                 Delete Profile Picture
                                             </Button>
                                             <Dialog

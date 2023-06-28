@@ -16,7 +16,8 @@ export const PostDetails = ({ refreshPosts, post }) => {
     const [comment, setComment] = useState('')
     const user_id = parseInt(localStorage.getItem('user_id'))
 
-    const handleSubmitComment = (postId) => {
+    const handleSubmitComment = (postId, event) => {
+        event.preventDefault()
         const commentToSubmit = {
             "message": comment,
             "post": postId
@@ -79,7 +80,7 @@ export const PostDetails = ({ refreshPosts, post }) => {
                             {
                                 comment.sender === user_id ?
                                 <div className='margin-top-5px'>
-                                    <Button onClick={() => handleDeleteCommentButton(comment.id)} variant='contained'>Delete Comment</Button>
+                                    <Button onClick={() => handleDeleteCommentButton(comment.id)} size='large' variant="filledTonal">Delete Comment</Button>
                                 </div>
                                     : ""
                             }
@@ -90,6 +91,7 @@ export const PostDetails = ({ refreshPosts, post }) => {
                 : ""
         }
         <Stack direction="row" spacing={2}>
+            <form onSubmit={(event)=> handleSubmitComment(post.id, event)}>
             <TextField
                 placeholder="Add a Comment"
                 minRows={3}
@@ -115,7 +117,8 @@ export const PostDetails = ({ refreshPosts, post }) => {
                     minWidth: 300,
                 }}
             />
-            <Button variant="contained" onClick={() => handleSubmitComment(post.id)} >Submit</Button>
+            <Button className='underline' size='large' type="submit" variant="filledTonal" >Submit</Button>
+        </form>
         </Stack>
     </Box>
 }

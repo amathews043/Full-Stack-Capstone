@@ -82,7 +82,7 @@ export const EditPostForm = ({ postId, updatePostCallback }) => {
     return (
         <Container maxWidth="sm">
         <Box sx={{ minWidth: 120 }} className="text-center">
-            <Button variant="contained" type="button" className="text-center toggle post-list-header" onClick={() => { setForm(!formShown) }}> Edit Post</Button>
+            <Button size='large' variant="filledTonal" type="button" className="text-center toggle post-list-header underline" onClick={() => { setForm(!formShown) }}> Edit Post</Button>
             {
                 formShown ?
                     <form justifyContent="center" onSubmit={submit}>
