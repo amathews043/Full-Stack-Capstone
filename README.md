@@ -1,70 +1,40 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- [Application Overview](#application-overview)
+- [Features](#features)
+- [Planning](#planning)
+- [Technologies Used](#technologies-used)
+- [Installation](#installation)
+- [Acknowledgements](#acknowledgements)
 
-## Available Scripts
 
-In the project directory, you can run:
+# Application Overview 
+Handmade Hangout is a crafting social media site where crafters can share their projects and get inspiration from what others are making. One exciting feature of this project is the ability for users to autofill their social media posts. This feature makes API calls to OpenAI with information provided by the user and returns a potential social media post. This project was created using Python, Django, JavaScript, React, Material UI, and Cloudinary.
 
-### `npm start`
+# Features 
+* Users can add projects to their profile using the "Start a new project form" and they can choose whether or not to make the project visible to other users. 
+* Users can add private notes to their projects to help remember and keep track of information without making it public to other users.
+* Users can make posts about their projects to share them with other. Handmade Hangout integrates with OpenAI and allows users to autofill their posts if they are unsure what to say. 
+* Users can add photos to their posts. 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+# Planning 
+* [ERD](https://dbdiagram.io/d/Full-stack-capstone-647d142f722eb774945f84b8)
+![ERD](ERD.png)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+# Technologies Used 
+* React 
+* JavaScript 
+* CSS 
+* Material UI
+* HTML 
+* Cloudinary 
 
-### `npm test`
+# Installation 
+1. Follow the instructions to setup the database [here](https://github.com/amathews043/Full-Stack-Capstone-API) 
+2. Clone the Application 
+    ```git clone git@github.com:amathews043/Front-End-Capstone.git```
+3. Launch the Client 
+    ```npm install```
+    ```npm start```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# Acknowledgements
+I couldn't have done any of this without all the wonderful people in Cohort 62. Thank you all for all the support and help!
