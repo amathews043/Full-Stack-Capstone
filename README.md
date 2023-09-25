@@ -29,7 +29,7 @@ Handmade Hangout is a crafting social media site where crafters can share their 
 * Cloudinary 
 
 # Installation 
-1. Follow the instructions to setup the database [here](https://github.com/amathews043/Full-Stack-Capstone-API) 
+1. Follow the instructions to setup the api [here](https://github.com/amathews043/Full-Stack-Capstone-API) 
 2. Clone the Application 
     ```git@github.com:amathews043/Full-Stack-Capstone.git```
 3. Launch the Client 
