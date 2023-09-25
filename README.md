@@ -31,7 +31,7 @@ Handmade Hangout is a crafting social media site where crafters can share their 
 # Installation 
 1. Follow the instructions to setup the database [here](https://github.com/amathews043/Full-Stack-Capstone-API) 
 2. Clone the Application 
-    ```git clone git@github.com:amathews043/Front-End-Capstone.git```
+    ```git@github.com:amathews043/Full-Stack-Capstone.git```
 3. Launch the Client 
     ```npm install```
     ```npm start```
